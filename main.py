@@ -27,9 +27,11 @@ flag_limite = True
 # flag_limite2 = True
 
 #Creamos personaje ppal
-player = personaje.crear(ANCHO_VENTANA/2, ALTO_VENTANA - 80,36,36)
+player = personaje.crear(ANCHO_VENTANA/2, ALTO_VENTANA - 80,36,36,"img\ship.png")
 #CREAMOS ENEMIGOS
-lista_enemigos = enemigos.crear_lista_enemigos(6)
+lista_enemigos1 = enemigos.crear_lista_enemigos(6,0,0,60,60,"img\spiked1.PNG")
+lista_enemigos2 = enemigos.crear_lista_enemigos(6,0,70,60,60,"img\spiked2.PNG")
+lista_enemigos3 = enemigos.crear_lista_enemigos(6,0,140,60,60,"img\spiked3.PNG")
 
 #CREAMOS TEXTO
 fuente = pygame.font.SysFont("Arial",20)
@@ -47,9 +49,13 @@ while flag_run:
         if evento.type == pygame.USEREVENT:
             if evento.type == timer:
                 if(sentido):
-                    sentido = enemigos.update_right(lista_enemigos,ANCHO_VENTANA,30,sentido)
+                    sentido = enemigos.update_right(lista_enemigos1,ANCHO_VENTANA,30,sentido)
+                    sentido = enemigos.update_right(lista_enemigos2,ANCHO_VENTANA,30,sentido)
+                    sentido = enemigos.update_right(lista_enemigos3,ANCHO_VENTANA,30,sentido)
                 else:
-                    sentido = enemigos.update_left(lista_enemigos,ANCHO_VENTANA,30,sentido)
+                    sentido = enemigos.update_left(lista_enemigos1,ANCHO_VENTANA,30,sentido)
+                    sentido = enemigos.update_left(lista_enemigos2,ANCHO_VENTANA,30,sentido)
+                    sentido = enemigos.update_left(lista_enemigos3,ANCHO_VENTANA,30,sentido)
 
         lista_teclas = pygame.key.get_pressed()
         # if lista_teclas[pygame.K_RIGHT] and rec_pos[0] < ANCHO_VENTANA - REC_TAM[0]:
@@ -66,7 +72,9 @@ while flag_run:
     ventana_principal.fill(colores.COLOR_AZUL_MEDIANOCHE)
 
     personaje.actualizar_pantalla(player, ventana_principal)
-    enemigos.actualizar_pantalla(lista_enemigos,ventana_principal)
+    enemigos.actualizar_pantalla(lista_enemigos1,ventana_principal)
+    enemigos.actualizar_pantalla(lista_enemigos2,ventana_principal)
+    enemigos.actualizar_pantalla(lista_enemigos3,ventana_principal)
     
     pygame.display.flip()
 

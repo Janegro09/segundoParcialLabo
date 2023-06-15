@@ -58,8 +58,10 @@ def actualizar_pantalla(lista_enemigos, pantalla):
         pygame.draw.rect(pantalla, colores.COLOR_MARRON_AVENA, enemigo["rect"])
         pantalla.blit(enemigo["surface"],enemigo["rect"])
 
-def crear_lista_enemigos(cant):
+def crear_lista_enemigos(cant, x, y, ancho, alto, path_imagen):
     lista_naves = []
+    pos_naves = 0
     for i in range(cant):
-        lista_naves.append(crear_enemigo(0+(i*80),0,60,60,"galaxia\img\spiked1.PNG"))
+        lista_naves.append(crear_enemigo(x+pos_naves,y,ancho, alto, path_imagen))
+        pos_naves=ancho + pos_naves +10
     return lista_naves

@@ -1,9 +1,9 @@
 import pygame
 import colores
 
-def crear(x,y,ancho, alto):
+def crear(x,y,ancho, alto, path):
     dict_personaje = {}
-    dict_personaje["surface"] = pygame.image.load("galaxia\img\ship.png")
+    dict_personaje["surface"] = pygame.image.load(path)
     dict_personaje["surface"] =  pygame.transform.scale(dict_personaje["surface"],(ancho,alto))
     
     dict_personaje["rect"] = dict_personaje["surface"].get_rect()
