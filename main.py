@@ -57,16 +57,7 @@ while flag_run:
                     sentido = enemigos.update_left(lista_enemigos2,ANCHO_VENTANA,30,sentido)
                     sentido = enemigos.update_left(lista_enemigos3,ANCHO_VENTANA,30,sentido)
 
-        lista_teclas = pygame.key.get_pressed()
-        # if lista_teclas[pygame.K_RIGHT] and rec_pos[0] < ANCHO_VENTANA - REC_TAM[0]:
-        #     rect_nave[0] = rect_nave[0] + 5
-
-        # if lista_teclas[pygame.K_LEFT] and rec_pos[0] > 0:
-        #     rect_nave[0] = rect_nave[0] - 5
-        # if lista_teclas[pygame.K_UP] and rec_pos[1] > 0:
-        #     rec_pos[1] = rec_pos[1] - 5
-        # if lista_teclas[pygame.K_DOWN] and rec_pos[1] < ALTO_VENTANA - REC_TAM[1]:
-        #     rec_pos[1] = rec_pos[1] + 5
+        personaje.mover(player, ANCHO_VENTANA, ALTO_VENTANA)
 
 
     ventana_principal.fill(colores.COLOR_AZUL_MEDIANOCHE)

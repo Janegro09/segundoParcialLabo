@@ -16,7 +16,6 @@ def crear_enemigo(x,y,ancho,alto,parametro):
     return dict_enemigo
 
 def update_left(lista_enemigos, ancho, tam, cambiar_sentido):
-    print("entro a left")
     primera_nave = lista_enemigos[0]
     #muevo a la izquierda
     if(primera_nave["rect"][0] > 0  ):
@@ -34,9 +33,8 @@ def update_left(lista_enemigos, ancho, tam, cambiar_sentido):
     return cambiar_sentido
 
 def update_right(lista_enemigos, ancho, tam, cambiar_sentido):
-    print("Entro a right")
     ultima_nave = lista_enemigos[len(lista_enemigos) - 1]
-    #muevo a la izquierda
+    #muevo a la derecha
     ancho_nave = ultima_nave["rect"].width
     if(ultima_nave["rect"][0] < ancho - ancho_nave ):
         for enemigo in lista_enemigos:

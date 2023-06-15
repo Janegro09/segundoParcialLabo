@@ -18,3 +18,15 @@ def actualizar_pantalla(personaje, pantalla):
     pygame.draw.rect(pantalla, colores.COLOR_ROJO_INDIAN, personaje["rect"])
     pantalla.blit(personaje["surface"],personaje["rect"])
 
+def mover(nave,ancho,alto):
+    ancho_nave = nave["rect"].width
+    lista_teclas = pygame.key.get_pressed()
+    print(lista_teclas)
+    if lista_teclas[pygame.K_RIGHT] and nave["rect"].x < ancho - ancho_nave:
+        nave["rect"].x = nave["rect"].x + 5
+    if lista_teclas[pygame.K_LEFT] and nave["rect"].x > 0:
+        nave["rect"].x = nave["rect"].x - 5
+    # if lista_teclas[pygame.K_UP] and nave[1] > 0:
+    #     nave[1] = nave[1] - 5
+    # if lista_teclas[pygame.K_DOWN] and nave[1] < alto - ancho_nave:
+    #     nave[1] = nave[1] + 5
