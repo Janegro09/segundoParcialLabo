@@ -20,7 +20,7 @@ flag_run = True
 
 # TIMER fabrique un evento independiente del usuario que se ejecuta una vez cada mls que le indique
 timer = pygame.USEREVENT
-pygame.time.set_timer(timer,500)
+pygame.time.set_timer(timer,100)
 # timer_segundo2 = pygame.USEREVENT
 # pygame.time.set_timer(timer_segundo2,10)
 flag_limite = True
@@ -57,8 +57,7 @@ while flag_run:
                     sentido = enemigos.update_left(lista_enemigos2,ANCHO_VENTANA,30,sentido)
                     sentido = enemigos.update_left(lista_enemigos3,ANCHO_VENTANA,30,sentido)
 
-        personaje.mover(player, ANCHO_VENTANA, ALTO_VENTANA)
-
+    personaje.mover(player, ANCHO_VENTANA, ALTO_VENTANA)
 
     ventana_principal.fill(colores.COLOR_AZUL_MEDIANOCHE)
 
