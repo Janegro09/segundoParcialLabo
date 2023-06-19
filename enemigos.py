@@ -1,27 +1,43 @@
 import pygame
 import colores
 
-def crear_enemigo(x,y,ancho,alto,parametro):
-    imagen_nave = pygame.image.load(parametro)
-    imagen_nave = pygame.transform.scale(imagen_nave,(ancho,alto))
+class NaveVerde:
+    def __init__(self,x,y,ancho,alto,puntaje,parametro) -> None:
+        self.superficie = pygame.transform.scale(pygame.image.load(parametro),(ancho,alto))
 
-    rect_nave = imagen_nave.get_rect()
-    rect_nave.x = x
-    rect_nave.y = y
+        self.rectangulo = self.superficie.get_rect()
+        self.rectangulo.x = x
+        self.rectangulo.y = y
+        self.viva = True
+        self.puntaje = puntaje
 
-    dict_enemigo = {}
-    dict_enemigo["surface"] = imagen_nave
-    dict_enemigo["rect"] = rect_nave
+    def mover(self):
+        self.rectangulo.x +=10
 
-    return dict_enemigo
+    def actualizar_pantalla(self,pantalla):
+        pygame.draw.rect(pantalla, colores.COLOR_ROJO_INDIAN, self.rectangulo)
+        pantalla.blit(self.superficie, self.rectangulo)
 
-def update_left(lista_enemigos, ancho, tam, cambiar_sentido):
+
+def update(lista_enemigos, ancho, tam, nave_ppal, sentido = True):
+    if(sentido):
+        sentido = update_right(lista_enemigos,ancho,30,sentido, nave_ppal)
+        # sentido = enemigos.update_right(lista_enemigos2,ANCHO_VENTANA,30,sentido)
+        # sentido = enemigos.update_right(lista_enemigos3,ANCHO_VENTANA,30,sentido)
+    else:
+        sentido = update_left(lista_enemigos,ancho,30,sentido, nave_ppal)
+        # sentido = enemigos.update_left(lista_enemigos2,ANCHO_VENTANA,30,sentido)
+        # sentido = enemigos.update_left(lista_enemigos3,ANCHO_VENTANA,30,sentido)
+
+def update_left(lista_enemigos, ancho, tam, cambiar_sentido, nave_ppal):
     primera_nave = lista_enemigos[0]
     #muevo a la izquierda
     if(primera_nave["rect"][0] > 0  ):
         for enemigo in lista_enemigos:
             rect_enemigo = enemigo["rect"]
             rect_enemigo[0] = rect_enemigo[0] - 10
+            if rect_enemigo.colliderect(nave_ppal["rect"]):
+                print("Choco")
     #bajo todo
     else:
         for enemigo in lista_enemigos:
@@ -32,7 +48,7 @@ def update_left(lista_enemigos, ancho, tam, cambiar_sentido):
 
     return cambiar_sentido
 
-def update_right(lista_enemigos, ancho, tam, cambiar_sentido):
+def update_right(lista_enemigos, ancho, tam, cambiar_sentido, nave_ppal):
     ultima_nave = lista_enemigos[len(lista_enemigos) - 1]
     #muevo a la derecha
     ancho_nave = ultima_nave["rect"].width
@@ -40,6 +56,9 @@ def update_right(lista_enemigos, ancho, tam, cambiar_sentido):
         for enemigo in lista_enemigos:
             rect_enemigo = enemigo["rect"]
             rect_enemigo[0] = rect_enemigo[0] + 10
+            if rect_enemigo.colliderect(nave_ppal["rect"]):
+                print("Choco")
+
     #bajo todo
     else:
         for enemigo in lista_enemigos:
@@ -51,10 +70,6 @@ def update_right(lista_enemigos, ancho, tam, cambiar_sentido):
     return cambiar_sentido
 
 
-def actualizar_pantalla(lista_enemigos, pantalla):
-    for enemigo in lista_enemigos:
-        pygame.draw.rect(pantalla, colores.COLOR_MARRON_AVENA, enemigo["rect"])
-        pantalla.blit(enemigo["surface"],enemigo["rect"])
 
 def crear_lista_enemigos(cant, x, y, ancho, alto, path_imagen):
     lista_naves = []
