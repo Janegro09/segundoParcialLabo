@@ -11,12 +11,27 @@ class NaveVerde:
         self.viva = True
         self.puntaje = puntaje
 
-    def mover(self):
+    def mover_derecha(self):
         self.rectangulo.x +=10
+
+    def mover_izquierda(self):
+        self.rectangulo.x -=10
+
+    def mover(self, direccion):
+        if(direccion):
+            self.mover_derecha()
+        else:
+            self.mover_izquierda()
 
     def actualizar_pantalla(self,pantalla):
         pygame.draw.rect(pantalla, colores.COLOR_ROJO_INDIAN, self.rectangulo)
         pantalla.blit(self.superficie, self.rectangulo)
+
+    @property
+    def posicion(self):
+        return self.rectangulo.x
+
+    
 
 
 def update(lista_enemigos, ancho, tam, nave_ppal, sentido = True):

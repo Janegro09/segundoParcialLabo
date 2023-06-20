@@ -18,9 +18,9 @@ class NavePpal:
         ancho_nave = self.rectangulo.width
         lista_teclas = pygame.key.get_pressed()
         if lista_teclas[pygame.K_RIGHT] and self.rectangulo.x < ancho - ancho_nave:
-            self.rectangulo.x = self.rectangulo.x + 1
+            self.rectangulo.x = self.rectangulo.x + 5
         if lista_teclas[pygame.K_LEFT] and self.rectangulo.x > 0:
-            self.rectangulo.x = self.rectangulo.x - 1
+            self.rectangulo.x = self.rectangulo.x - 5
         # if lista_teclas[pygame.K_UP] and nave[1] > 0:
         #     nave[1] = nave[1] - 5
         # if lista_teclas[pygame.K_DOWN] and nave[1] < alto - ancho_nave:
