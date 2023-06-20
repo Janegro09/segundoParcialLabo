@@ -37,7 +37,7 @@ texto = fuente.render("PUNTAJE:", True, colores.COLOR_AMARILLO_ARENA)
 #Sentido de las naves
 sentido1 = True
 sentido2 = True
-sentido3 = True
+sentido3 = True 
 
 imagen_fondo = pygame.image.load(PATH_IMG+"fondo.png")
 imagen_fondo = pygame.transform.scale(imagen_fondo, (ANCHO_VENTANA, ALTO_VENTANA))
@@ -48,24 +48,29 @@ while flag_run:
     delta_ms = clock.tick(FPS)
     
     #PLAYER UPDATE
-    player.mover(ANCHO_VENTANA, ALTO_VENTANA)
-
+    player.control("STAY")
 
     lista_eventos = pygame.event.get()
     for evento in lista_eventos:
         if (evento.type == pygame.QUIT):
             flag_run = False
-        if evento.type == pygame.MOUSEBUTTONDOWN:
-            rec_pos = evento.pos
+
+        if evento.type == pygame.KEYDOWN:
+            if(evento.key == pygame.K_SPACE):
+                player.control("SHOT")
+
+                print(evento)
+
+
         if evento.type == pygame.USEREVENT:
             sentido1 = helpers.mover_naves(lista_enemigos_verde, ANCHO_VENTANA, TAMANIO_NAVE_ENEMIGA,sentido1)
             sentido2 = helpers.mover_naves(lista_enemigos_azul, ANCHO_VENTANA, TAMANIO_NAVE_ENEMIGA,sentido2)
             sentido3 = helpers.mover_naves(lista_enemigos_rojo, ANCHO_VENTANA, TAMANIO_NAVE_ENEMIGA,sentido3)
 
     # PERSONAJE DRAW
-    player.update(ventana_principal)
+    player.update()
     player.draw(ventana_principal)
-    
+
     # ENEMY DRAW
     for nave in lista_enemigos_verde:
         nave.actualizar_pantalla(ventana_principal)
