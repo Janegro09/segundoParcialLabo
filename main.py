@@ -1,6 +1,6 @@
 import pygame
 import colores
-import fn_aux
+import helpers
 from enemigos import NaveVerde
 from personaje import NavePpal
 from constantes import *
@@ -17,7 +17,7 @@ pygame.time.set_timer(timer,100)
 flag_limite = True
 clock = pygame.time.Clock()
 #Creamos personaje ppal
-player = NavePpal(PATH_IMG+"ship.png",36, 36,ANCHO_VENTANA/2,ALTO_VENTANA - 80)
+player = NavePpal(ANCHO_VENTANA/2,ALTO_VENTANA-100)
 
 #CREAMOS ENEMIGOS
 total_enemigos = range(7)
@@ -58,13 +58,14 @@ while flag_run:
         if evento.type == pygame.MOUSEBUTTONDOWN:
             rec_pos = evento.pos
         if evento.type == pygame.USEREVENT:
-            sentido1 = fn_aux.mover_naves(lista_enemigos_verde, ANCHO_VENTANA, TAMANIO_NAVE_ENEMIGA,sentido1)
-            sentido2 = fn_aux.mover_naves(lista_enemigos_azul, ANCHO_VENTANA, TAMANIO_NAVE_ENEMIGA,sentido2)
-            sentido3 = fn_aux.mover_naves(lista_enemigos_rojo, ANCHO_VENTANA, TAMANIO_NAVE_ENEMIGA,sentido3)
+            sentido1 = helpers.mover_naves(lista_enemigos_verde, ANCHO_VENTANA, TAMANIO_NAVE_ENEMIGA,sentido1)
+            sentido2 = helpers.mover_naves(lista_enemigos_azul, ANCHO_VENTANA, TAMANIO_NAVE_ENEMIGA,sentido2)
+            sentido3 = helpers.mover_naves(lista_enemigos_rojo, ANCHO_VENTANA, TAMANIO_NAVE_ENEMIGA,sentido3)
 
     # PERSONAJE DRAW
-    player.actualizar_pantalla(ventana_principal)
-
+    player.update(ventana_principal)
+    player.draw(ventana_principal)
+    
     # ENEMY DRAW
     for nave in lista_enemigos_verde:
         nave.actualizar_pantalla(ventana_principal)

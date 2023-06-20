@@ -1,5 +1,6 @@
 import pygame
 import colores
+from constantes import *
 
 class NaveVerde:
     def __init__(self,x,y,ancho,alto,puntaje,parametro) -> None:
@@ -12,10 +13,10 @@ class NaveVerde:
         self.puntaje = puntaje
 
     def mover_derecha(self):
-        self.rectangulo.x +=10
+        self.rectangulo.x +=DESPLAZAMIENTO
 
     def mover_izquierda(self):
-        self.rectangulo.x -=10
+        self.rectangulo.x -=DESPLAZAMIENTO
 
     def mover(self, direccion):
         if(direccion):
