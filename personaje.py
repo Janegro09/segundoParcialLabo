@@ -40,7 +40,7 @@ class NavePpal:
     def update(self):
 
         if(len(self.disparos) > 0):
-            if(self.disparos[0].rectangulo.y < 0):
+            if(self.disparos[0].rectangulo.y < 0 or self.disparos[0].choco):
                 self.disparos.pop(0)
                 
         if(self.frame < len(self.animacion)-1):

@@ -8,6 +8,7 @@ class Disparar:
         self.rectangulo = self.surface_image.get_rect()
         self.rectangulo.x = posx-3
         self.rectangulo.y = posy-3
+        self.choco = False
         
     def mover(self):
         self.rectangulo.y -=DESPLAZAMIENTO

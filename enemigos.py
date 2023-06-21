@@ -38,7 +38,9 @@ class NaveVerde:
 
         for misil in disparos:
             if self.rectangulo.colliderect(misil.rectangulo):
-                self.animacion = self.muere
+                if(self.animacion != self.muere):
+                    self.animacion = self.muere
+                    misil.choco = True
         if(self.animacion == self.muere):
             if(self.frame < len(self.animacion)-1):
                 self.frame +=1

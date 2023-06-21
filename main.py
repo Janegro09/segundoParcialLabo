@@ -68,13 +68,13 @@ while flag_run:
             sentido2 = helpers.mover_naves(lista_enemigos_azul, ANCHO_VENTANA, TAMANIO_NAVE_ENEMIGA,sentido2)
             sentido3 = helpers.mover_naves(lista_enemigos_rojo, ANCHO_VENTANA, TAMANIO_NAVE_ENEMIGA,sentido3)
 
-    # PERSONAJE DRAW
+    # PERSONAJE DRAW&UPDATE
     player.update()
     player.draw(ventana_principal)
     # SHOT DRAW
     for misil in player.disparos:
         misil.actualizar_pantalla(ventana_principal)
-    # ENEMY DRAW
+    # ENEMY DRAW&UPDATE
     for nave in lista_enemigos_verde:
         nave.update(player.disparos)
         nave.draw(ventana_principal)
