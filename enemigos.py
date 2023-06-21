@@ -35,6 +35,7 @@ class NaveVerde:
             self.mover_izquierda()
 
     def update(self, disparos=[]):
+
         for misil in disparos:
             if self.rectangulo.colliderect(misil.rectangulo):
                 self.animacion = self.muere
