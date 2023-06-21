@@ -10,7 +10,7 @@ class Disparar:
         self.rectangulo.y = posy-3
         
     def mover(self):
-        self.rectangulo.y -=DESPLAZAMIENTO*2
+        self.rectangulo.y -=DESPLAZAMIENTO
 
     def actualizar_pantalla(self,pantalla):
         self.mover()

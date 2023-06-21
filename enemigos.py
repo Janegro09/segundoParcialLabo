@@ -1,15 +1,25 @@
 import pygame
 import colores
 from constantes import *
+from helpers import *
 
 class NaveVerde:
-    def __init__(self,x,y,ancho,alto,puntaje,parametro) -> None:
-        self.superficie = pygame.transform.scale(pygame.image.load(parametro),(ancho,alto))
+    def __init__(self,posx,posy,ancho,alto,puntaje,parametro) -> None:
 
-        self.rectangulo = self.superficie.get_rect()
-        self.rectangulo.x = x
-        self.rectangulo.y = y
-        self.viva = True
+        self.superficie = get_superficie_sprite(PATH_IMG+parametro,1,1)
+        self.superficie = escalar(self.superficie,(TAMANIO_NAVE_ENEMIGA,TAMANIO_NAVE_ENEMIGA))
+        self.muere = get_superficie_sprite(PATH_IMG+"explosion.png",3,2)
+        self.muere = escalar(self.muere)
+        self.frame = 0
+        self.animacion = self.superficie
+        self.imagen = self.animacion[self.frame]
+        self.animacion_repetir = True
+
+        self.rectangulo = self.imagen.get_rect()
+        self.rectangulo.x = posx
+        self.rectangulo.y = posy
+        
+        self.mostrar = True
         self.puntaje = puntaje
 
     def mover_derecha(self):
@@ -24,15 +34,25 @@ class NaveVerde:
         else:
             self.mover_izquierda()
 
-    def actualizar_pantalla(self,pantalla):
-        pygame.draw.rect(pantalla, colores.COLOR_ROJO_INDIAN, self.rectangulo)
-        pantalla.blit(self.superficie, self.rectangulo)
+    def update(self, disparos=[]):
+        for misil in disparos:
+            if self.rectangulo.colliderect(misil.rectangulo):
+                self.animacion = self.muere
+        if(self.animacion == self.muere):
+            if(self.frame < len(self.animacion)-1):
+                self.frame +=1
+            else:
+                self.mostrar = False
+
+        self.imagen = self.animacion[self.frame]
+
+    def draw(self,pantalla):
+        if(self.mostrar):
+            pantalla.blit(self.imagen, self.rectangulo)
 
     @property
     def posicion(self):
         return self.rectangulo.x
-
-    
 
 
 def update(lista_enemigos, ancho, tam, nave_ppal, sentido = True):
@@ -87,10 +107,10 @@ def update_right(lista_enemigos, ancho, tam, cambiar_sentido, nave_ppal):
 
 
 
-def crear_lista_enemigos(cant, x, y, ancho, alto, path_imagen):
-    lista_naves = []
-    pos_naves = 0
-    for i in range(cant):
-        lista_naves.append(crear_enemigo(x+pos_naves,y,ancho, alto, path_imagen))
-        pos_naves=ancho + pos_naves +10
-    return lista_naves
+# def crear_lista_enemigos(cant, x, y, ancho, alto, path_imagen):
+#     lista_naves = []
+#     pos_naves = 0
+#     for i in range(cant):
+#         lista_naves.append(crear_enemigo(x+pos_naves,y,ancho, alto, path_imagen))
+#         pos_naves=ancho + pos_naves +10
+#     return lista_naves

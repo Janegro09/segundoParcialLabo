@@ -26,9 +26,9 @@ lista_enemigos_azul = []
 lista_enemigos_rojo = []
 
 for i in total_enemigos:
-    lista_enemigos_verde.append(NaveVerde(0+i*70,BASE_ENEMIGA ,TAMANIO_NAVE_ENEMIGA,TAMANIO_NAVE_ENEMIGA,10,PATH_IMG+"spiked1.PNG"))
-    lista_enemigos_azul.append(NaveVerde(0+i*70,BASE_ENEMIGA + TAMANIO_NAVE_ENEMIGA + 10,TAMANIO_NAVE_ENEMIGA,TAMANIO_NAVE_ENEMIGA,10,PATH_IMG+"spiked2.PNG"))
-    lista_enemigos_rojo.append(NaveVerde(0+i*70,BASE_ENEMIGA +(TAMANIO_NAVE_ENEMIGA + 10)*2,TAMANIO_NAVE_ENEMIGA,TAMANIO_NAVE_ENEMIGA,10,PATH_IMG+"spiked3.PNG"))
+    lista_enemigos_verde.append(NaveVerde(0+i*70,BASE_ENEMIGA ,TAMANIO_NAVE_ENEMIGA,TAMANIO_NAVE_ENEMIGA,10,"spiked1.PNG"))
+    lista_enemigos_azul.append(NaveVerde(0+i*70,BASE_ENEMIGA + TAMANIO_NAVE_ENEMIGA + 10,TAMANIO_NAVE_ENEMIGA,TAMANIO_NAVE_ENEMIGA,10,"spiked2.PNG"))
+    lista_enemigos_rojo.append(NaveVerde(0+i*70,BASE_ENEMIGA +(TAMANIO_NAVE_ENEMIGA + 10)*2,TAMANIO_NAVE_ENEMIGA,TAMANIO_NAVE_ENEMIGA,10,"spiked3.PNG"))
 
 #CREAMOS TEXTO
 fuente = pygame.font.SysFont("Arial",20)
@@ -41,7 +41,11 @@ sentido3 = True
 
 imagen_fondo = pygame.image.load(PATH_IMG+"fondo.png")
 imagen_fondo = pygame.transform.scale(imagen_fondo, (ANCHO_VENTANA, ALTO_VENTANA))
+pygame.mixer.music.load("music/stage1.mp3")
 
+pygame.mixer.music.set_volume(0.1)
+
+pygame.mixer.music.play(-1)
 while flag_run:
     ventana_principal.blit(imagen_fondo,imagen_fondo.get_rect())
     # ventana_principal.fill(colores.COLOR_AZUL_MEDIANOCHE)
@@ -59,9 +63,6 @@ while flag_run:
             if(evento.key == pygame.K_SPACE):
                 player.control("SHOT")
 
-                print(evento)
-
-
         if evento.type == pygame.USEREVENT:
             sentido1 = helpers.mover_naves(lista_enemigos_verde, ANCHO_VENTANA, TAMANIO_NAVE_ENEMIGA,sentido1)
             sentido2 = helpers.mover_naves(lista_enemigos_azul, ANCHO_VENTANA, TAMANIO_NAVE_ENEMIGA,sentido2)
@@ -75,12 +76,16 @@ while flag_run:
         misil.actualizar_pantalla(ventana_principal)
     # ENEMY DRAW
     for nave in lista_enemigos_verde:
-        nave.actualizar_pantalla(ventana_principal)
+        nave.update(player.disparos)
+        nave.draw(ventana_principal)
     for nave in lista_enemigos_azul:
-        nave.actualizar_pantalla(ventana_principal)
+        nave.update(player.disparos)
+        nave.draw(ventana_principal)
     for nave in lista_enemigos_rojo:
-        nave.actualizar_pantalla(ventana_principal)
+        nave.update(player.disparos)
+        nave.draw(ventana_principal)
 
     pygame.display.flip()
 
+pygame.mixer.music.stop()
 pygame.quit()

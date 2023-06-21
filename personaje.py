@@ -8,6 +8,16 @@ from disparos import Disparar
 
 class NavePpal:
     def __init__(self,posx,posy) -> None:
+            self.quieto = get_superficie_sprite(PATH_IMG+"player_ship.png",4,1)
+            self.quieto = get_superficie_sprite(PATH_IMG+"player_ship.png",4,1)
+
+            self.muere = get_superficie_sprite(PATH_IMG+"explosion.png",3,2)
+            self.muere = escalar(self.muere)
+            self.frame = 0
+            self.animacion = self.quieto
+            self.imagen = self.animacion[self.frame]
+            self.animacion_repetir = True
+            
             self.velocidad = 5
             self.vidas = 3
             self.score = 0
@@ -15,15 +25,8 @@ class NavePpal:
             # self.superficie =  pygame.transform.scale(pygame.image.load(path),(ancho,alto))
             self.mostar = True
             self.disparos = []
-            self.quieto = get_superficie_sprite(PATH_IMG+"player_ship.png",4,1)
-            self.quieto = get_superficie_sprite(PATH_IMG+"player_ship.png",4,1)
-            self.muere = get_superficie_sprite(PATH_IMG+"explosion.png",3,2)
-            self.muere = escalar(self.muere)
-            self.animacion_repetir = True
-            self.frame = 0
 
-            self.animacion = self.quieto
-            self.imagen = self.animacion[self.frame]
+
             self.rectangulo = self.imagen.get_rect()
             self.rectangulo.centerx = posx
             self.rectangulo.y = posy

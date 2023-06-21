@@ -2,7 +2,7 @@ import pygame
 
 ALTO_VENTANA = 600
 ANCHO_VENTANA = 720
-FPS = 10
+FPS = 60
 
 #IMAGENES
 PATH_IMG = "img/"
