@@ -70,7 +70,9 @@ while flag_run:
     # PERSONAJE DRAW
     player.update()
     player.draw(ventana_principal)
-
+    # SHOT DRAW
+    for misil in player.disparos:
+        misil.actualizar_pantalla(ventana_principal)
     # ENEMY DRAW
     for nave in lista_enemigos_verde:
         nave.actualizar_pantalla(ventana_principal)
