@@ -5,7 +5,7 @@ from constantes import *
 from helpers import *
 from disparos import Disparar
 
-class NaveVerde:
+class Enemigos:
     def __init__(self,posx,posy,puntaje,parametro) -> None:
 
         self.superficie = get_superficie_sprite(PATH_IMG+parametro,1,1)

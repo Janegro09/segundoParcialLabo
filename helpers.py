@@ -1,4 +1,3 @@
-# from enemigos import NaveVerde
 import pygame
 from constantes import *
 
@@ -9,7 +8,6 @@ def mandale_nave(numero):
         return NAVE_ENEMIGA_2
     if(numero == 3):
         return NAVE_ENEMIGA_3
-
 
 def get_superficie_sprite(path, filas, columnas ):
     lista = []
@@ -51,7 +49,6 @@ def mover_naves(lista, sentido="DER"):
             else:
                 bajar_naves(lista)
                 sentido = "DER"
-    #ABAJO    
 
     return sentido
 
@@ -59,26 +56,3 @@ def bajar_naves(lista):
     for nave in lista:
         nave.rectangulo.y+=int(TAMANIO_NAVE_ENEMIGA/4)
 
-
-# def mover_naves(lista,ancho, tamanio_nave,sentido):
-#     primera = False
-#     ultima = False
-#     for nave in lista:
-#         if(nave.mostrar):
-#             primera = nave
-#             break
-#     for nave in reversed(lista):
-#         if(nave.mostrar):
-#             ultima = nave
-#             break
-#     if(primera or ultima):
-#         #si es de izquierda o derecha
-#         if(primera.posicion < 0):
-#             sentido = not(sentido)
-#         else:
-#             if(ultima.posicion > ancho-tamanio_nave):
-#                 sentido = not(sentido)
-
-#         for nave in lista: 
-#             nave.mover(sentido)
-#     return sentido

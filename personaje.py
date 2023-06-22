@@ -18,7 +18,7 @@ class NavePpal:
             self.imagen = self.animacion[self.frame]
             self.animacion_repetir = True
             
-            self.limite_disparos = 10
+            self.limite_disparos = 5
             self.velocidad = 5
             self.vidas = 3
             self.score = 0
