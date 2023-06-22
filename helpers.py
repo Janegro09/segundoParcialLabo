@@ -30,7 +30,7 @@ def escalar(lista, tam = TAM):
     return nueva_lista
 
 
-def mover_naves(lista, sentido="DER"):
+def mover_naves(lista, sentido):
     #DERECHA
     if(sentido == "DER"):
         for nave in lista:
@@ -56,3 +56,9 @@ def bajar_naves(lista):
     for nave in lista:
         nave.rectangulo.y+=int(TAMANIO_NAVE_ENEMIGA/4)
 
+def contar_enemigos_vivos(lista):
+    lista_nueva = []
+    for elem in lista:
+        if elem.mostrar:
+            lista_nueva.append(elem)
+    return len(lista_nueva)

@@ -9,15 +9,13 @@ from disparos import Disparar
 class NavePpal:
     def __init__(self,posx,posy) -> None:
             self.quieto = get_superficie_sprite(PATH_IMG+"player_ship.png",4,1)
-            self.quieto = get_superficie_sprite(PATH_IMG+"player_ship.png",4,1)
-
             self.muere = get_superficie_sprite(PATH_IMG+"explosion.png",3,2)
             self.muere = escalar(self.muere)
             self.frame = 0
             self.animacion = self.quieto
             self.imagen = self.animacion[self.frame]
             self.animacion_repetir = True
-            
+            self.tiempo = 0
             self.limite_disparos = 5
             self.velocidad = 5
             self.vidas = 3
@@ -36,25 +34,43 @@ class NavePpal:
             disparo = Disparar(self.rectangulo.centerx,self.rectangulo.y)
             self.disparos.append(disparo)
 
-    def movimiento(self):
-
-        if(self.frame < len(self.animacion)-1):
-             self.frame +=1
-        else:
-            if(self.animacion_repetir):
-                self.frame = 0
+    def movimiento(self,tiempo):
+        if self.tiempo > 100:
+            self.tiempo = 0
+            if(self.frame < len(self.animacion)-1):
+                self.frame +=1
             else:
-                self.mostar = False
+                if(self.animacion_repetir):
+                    self.frame = 0
+                else:
+                    self.mostar = False
+        else:
+            self.tiempo+=tiempo
 
     def disparar(self):
         if(len(self.disparos) > 0):
             if(self.disparos[0].rectangulo.y < 0 or self.disparos[0].choco):
                 self.disparos.pop(0)
 
-    def update(self):
+    def update(self,tiempo):
 
         self.disparar()
-        self.movimiento()
+        if(self.mostar):
+            self.movimiento(tiempo)
+        if(self.animacion == self.muere):
+            self.tiempo += tiempo
+            print(self.tiempo)
+            if(self.tiempo > 1000):
+                self.frame = 0
+                self.animacion = self.quieto
+                self.mostar = True
+                self.animacion_repetir = True
+                if(self.vidas > 0):
+                    self.tiempo = 0
+                else:
+                    #GAME OVER
+                    pass
+            # self.limite_disparos=0
 
     def draw(self,pantalla):
         # pygame.draw.rect(pantalla, colores.COLOR_ROJO_INDIAN, self.rectangulo)
@@ -62,7 +78,7 @@ class NavePpal:
             self.imagen = self.animacion[self.frame]
             pantalla.blit(self.imagen, self.rectangulo)
 
-    def control(self, accion):
+    def control(self, accion, tiempo=0):
         ancho_nave = self.rectangulo.width
         if(accion == "STAY"):
             lista_teclas = pygame.key.get_pressed()
@@ -73,5 +89,6 @@ class NavePpal:
         if(accion == "SHOT"):
             self.shot()
         if(accion == "DEAD"):
-             self.animacion = self.muere
-             self.animacion_repetir = False
+            self.animacion = self.muere
+            self.animacion_repetir = False
+           

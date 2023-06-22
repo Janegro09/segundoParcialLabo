@@ -41,10 +41,10 @@ texto = fuente.render("PUNTAJE:", True, colores.COLOR_AMARILLO_ARENA)
 
 imagen_fondo = pygame.image.load(PATH_IMG+"fondo.png")
 imagen_fondo = pygame.transform.scale(imagen_fondo, (ANCHO_VENTANA, ALTO_VENTANA))
+
+#Sonido del juego
 pygame.mixer.music.load("music/stage1.mp3")
-
 pygame.mixer.music.set_volume(0)
-
 pygame.mixer.music.play(-1)
 
 #Sentido de las naves enemigas
@@ -71,17 +71,21 @@ while flag_run:
             sentido = mover_naves(lista_enemigos, sentido)
 
     # PERSONAJE DRAW&UPDATE
-    player.update()
+    player.update(delta_ms)
     player.draw(ventana_principal)
     # SHOT DRAW
     for misil in player.disparos:
         misil.actualizar_pantalla(ventana_principal,player.velocidad)
+
     # ENEMY DRAW&UPDATE
-    total_enemigos_vivos = []
+    total_enemigos_vivos = contar_enemigos_vivos(lista_enemigos)
+    potenciador = 1 if total_enemigos_vivos==0 else int(len(lista_enemigos)/total_enemigos_vivos)
     for nave in lista_enemigos:
-        nave.update(delta_ms,player.disparos)
+        nave.update(delta_ms,potenciador,player.disparos)
         nave.draw(ventana_principal)
         for misil in nave.disparos:
+            if misil.rectangulo.colliderect(player.rectangulo):
+                player.control("DEAD")
             misil.actualizar_pantalla(ventana_principal,nave.velocidad_disparo,"enemigo")
     pygame.display.flip()
 

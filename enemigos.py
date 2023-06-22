@@ -34,8 +34,8 @@ class Enemigos:
         self.mostrar = True
         self.puntaje = puntaje
 
-    def disparar(self):
-        if self.tiempo % self.frecuencia == 0:
+    def disparar(self,potenciador):
+        if self.tiempo % int(self.frecuencia/potenciador) == 0:
             if (self.limite_disparos > len(self.disparos) and self.mostrar) :
                 disparo = Disparar(self.rectangulo.centerx, self.rectangulo.y,"enemigo")
                 self.disparo = True
@@ -53,10 +53,14 @@ class Enemigos:
         else:
             self.mover_izquierda()
 
-    def update(self,delta_ms,disparos=[]):
+    def update(self,delta_ms,potenciador,disparos=[]):
 
         self.tiempo+=delta_ms
-        self.disparar()
+        self.disparar(potenciador)
+        #Recargamos, es decir si el misil salió de la pantalla lo eliminamos del listado
+        if(len(self.disparos) > 0):
+            if(self.disparos[0].rectangulo.y > ANCHO_VENTANA):
+                self.disparos.pop(0)    
 
         for misil in disparos:
             if self.rectangulo.colliderect(misil.rectangulo):
