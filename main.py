@@ -84,8 +84,10 @@ while flag_run:
         nave.update(delta_ms,potenciador,player.disparos)
         nave.draw(ventana_principal)
         for misil in nave.disparos:
-            if misil.rectangulo.colliderect(player.rectangulo):
-                player.control("DEAD")
+            if not player.inmune:
+                if misil.rectangulo.colliderect(player.rectangulo):
+                    player.control("DEAD")
+                    misil.mostrar = False
             misil.actualizar_pantalla(ventana_principal,nave.velocidad_disparo,"enemigo")
     pygame.display.flip()
 

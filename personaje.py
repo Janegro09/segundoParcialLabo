@@ -24,6 +24,7 @@ class NavePpal:
             self.mostar = True
             self.disparos = []
             self.velocidad_disparo = 5
+            self.inmune = False
 
             self.rectangulo = self.imagen.get_rect()
             self.rectangulo.centerx = posx
@@ -49,7 +50,7 @@ class NavePpal:
 
     def disparar(self):
         if(len(self.disparos) > 0):
-            if(self.disparos[0].rectangulo.y < 0 or self.disparos[0].choco):
+            if(self.disparos[0].rectangulo.y < 0 or not(self.disparos[0].mostrar)):
                 self.disparos.pop(0)
 
     def update(self,tiempo):
@@ -57,16 +58,23 @@ class NavePpal:
         self.disparar()
         if(self.mostar):
             self.movimiento(tiempo)
+        if(self.inmune):
+            self.tiempo+=tiempo
+            if(self.tiempo > 1000):
+                self.limite_disparos = 5
+                self.inmune = False
         if(self.animacion == self.muere):
             self.tiempo += tiempo
             print(self.tiempo)
             if(self.tiempo > 1000):
-                self.frame = 0
-                self.animacion = self.quieto
-                self.mostar = True
-                self.animacion_repetir = True
+                self.vidas -=1
                 if(self.vidas > 0):
+                    self.frame = 0
+                    self.animacion = self.quieto
+                    self.mostar = True
+                    self.animacion_repetir = True
                     self.tiempo = 0
+                    self.rectangulo.centerx=int(ANCHO_VENTANA/2)
                 else:
                     #GAME OVER
                     pass
@@ -78,7 +86,7 @@ class NavePpal:
             self.imagen = self.animacion[self.frame]
             pantalla.blit(self.imagen, self.rectangulo)
 
-    def control(self, accion, tiempo=0):
+    def control(self, accion):
         ancho_nave = self.rectangulo.width
         if(accion == "STAY"):
             lista_teclas = pygame.key.get_pressed()
@@ -90,5 +98,7 @@ class NavePpal:
             self.shot()
         if(accion == "DEAD"):
             self.animacion = self.muere
+            self.inmune = True
+            self.limite_disparos = 0
             self.animacion_repetir = False
            

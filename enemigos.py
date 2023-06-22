@@ -66,7 +66,7 @@ class Enemigos:
             if self.rectangulo.colliderect(misil.rectangulo):
                 if(self.animacion != self.muere):
                     self.animacion = self.muere
-                    misil.choco = True
+                    misil.mostrar = False
         if(self.animacion == self.muere):
             if(self.frame < len(self.animacion)-1):
                 self.frame +=1
