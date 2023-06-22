@@ -6,24 +6,26 @@ from helpers import *
 from disparos import Disparar
 
 class Enemigos:
-    def __init__(self,posx,posy,puntaje,parametro) -> None:
+    def __init__(self,posx,posy,puntaje,nivel,parametro) -> None:
 
         self.superficie = get_superficie_sprite(PATH_IMG+parametro,1,1)
         self.superficie = escalar(self.superficie,(TAMANIO_NAVE_ENEMIGA,TAMANIO_NAVE_ENEMIGA))
         self.muere = get_superficie_sprite(PATH_IMG+"explosion.png",3,2)
         self.muere = escalar(self.muere)
         self.frame = 0
+        self.nivel = nivel
         self.animacion = self.superficie
         self.imagen = self.animacion[self.frame]
         self.animacion_repetir = True
         self.limite_disparos = 10
         self.misiles = []
-        self.frecuencia = random.randint(1,10000)
+        self.frecuencia = random.randint(1,DIFICULTAD/nivel)
         self.disparo = False
-        self.velocidad_disparo = 1
+        self.velocidad_disparo = 1*self.nivel
         self.velocidad = 5
         self.sentido_derecho =True
         self.sentido_izquierdo = False
+        self.tiempo = 0
 
         self.rectangulo = self.imagen.get_rect()
         self.rectangulo.x = posx
@@ -32,11 +34,12 @@ class Enemigos:
         self.mostrar = True
         self.puntaje = puntaje
 
-    def disparar(self):
-        if (self.frecuencia % random.randint(1,DIFICULTAD) == 0 and self.limite_disparos > len(self.misiles) and self.mostrar) :
-            disparo = Disparar(self.rectangulo.x, self.rectangulo.y,"enemigo")
-            self.disparo = True
-            self.misiles.append(disparo)
+    def disparar(self, tiempo):
+        if tiempo % self.frecuencia == 0:
+            if (self.limite_disparos > len(self.misiles) and self.mostrar) :
+                disparo = Disparar(self.rectangulo.x, self.rectangulo.y,"enemigo")
+                self.disparo = True
+                self.misiles.append(disparo)
 
     def mover_derecha(self):
         self.rectangulo.x +=self.velocidad
@@ -50,9 +53,10 @@ class Enemigos:
         else:
             self.mover_izquierda()
 
-    def update(self, disparos=[]):
+    def update(self,delta_ms,disparos=[]):
 
-        self.disparar()
+        self.tiempo+=delta_ms
+        self.disparar(self.tiempo)
 
         for misil in disparos:
             if self.rectangulo.colliderect(misil.rectangulo):

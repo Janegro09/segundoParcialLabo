@@ -31,7 +31,7 @@ for i in total_columnas:
         tipo = random.randint(1,3)
         tipo_nave = mandale_nave(tipo)
         # self,posx,posy,puntaje,parametro
-        lista_enemigos.append(Enemigos(i*TAMANIO_NAVE_ENEMIGA,j*TAMANIO_NAVE_ENEMIGA,10,tipo_nave))
+        lista_enemigos.append(Enemigos(i*TAMANIO_NAVE_ENEMIGA,j*TAMANIO_NAVE_ENEMIGA,10,2,tipo_nave))
 
 total_enemigos = range(7)
 
@@ -78,9 +78,10 @@ while flag_run:
         misil.actualizar_pantalla(ventana_principal,player.velocidad)
     # ENEMY DRAW&UPDATE
     for nave in lista_enemigos:
-        nave.update(player.disparos)
+        nave.update(delta_ms,player.disparos)
         nave.draw(ventana_principal)
-    
+        for misil in nave.misiles:
+            misil.actualizar_pantalla(ventana_principal,nave.velocidad_disparo,"enemigo")
     pygame.display.flip()
 
 pygame.mixer.music.stop()
