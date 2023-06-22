@@ -36,13 +36,8 @@ class NavePpal:
             disparo = Disparar(self.rectangulo.centerx,self.rectangulo.y)
             self.disparos.append(disparo)
 
+    def movimiento(self):
 
-    def update(self):
-
-        if(len(self.disparos) > 0):
-            if(self.disparos[0].rectangulo.y < 0 or self.disparos[0].choco):
-                self.disparos.pop(0)
-                
         if(self.frame < len(self.animacion)-1):
              self.frame +=1
         else:
@@ -50,6 +45,16 @@ class NavePpal:
                 self.frame = 0
             else:
                 self.mostar = False
+
+    def disparar(self):
+        if(len(self.disparos) > 0):
+            if(self.disparos[0].rectangulo.y < 0 or self.disparos[0].choco):
+                self.disparos.pop(0)
+
+    def update(self):
+
+        self.disparar()
+        self.movimiento()
 
     def draw(self,pantalla):
         # pygame.draw.rect(pantalla, colores.COLOR_ROJO_INDIAN, self.rectangulo)

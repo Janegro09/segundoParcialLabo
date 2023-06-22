@@ -18,7 +18,7 @@ class Enemigos:
         self.imagen = self.animacion[self.frame]
         self.animacion_repetir = True
         self.limite_disparos = 10
-        self.misiles = []
+        self.disparos = []
         self.frecuencia = random.randint(1,DIFICULTAD/nivel)
         self.disparo = False
         self.velocidad_disparo = 1*self.nivel
@@ -34,12 +34,12 @@ class Enemigos:
         self.mostrar = True
         self.puntaje = puntaje
 
-    def disparar(self, tiempo):
-        if tiempo % self.frecuencia == 0:
-            if (self.limite_disparos > len(self.misiles) and self.mostrar) :
-                disparo = Disparar(self.rectangulo.x, self.rectangulo.y,"enemigo")
+    def disparar(self):
+        if self.tiempo % self.frecuencia == 0:
+            if (self.limite_disparos > len(self.disparos) and self.mostrar) :
+                disparo = Disparar(self.rectangulo.centerx, self.rectangulo.y,"enemigo")
                 self.disparo = True
-                self.misiles.append(disparo)
+                self.disparos.append(disparo)
 
     def mover_derecha(self):
         self.rectangulo.x +=self.velocidad
@@ -56,7 +56,7 @@ class Enemigos:
     def update(self,delta_ms,disparos=[]):
 
         self.tiempo+=delta_ms
-        self.disparar(self.tiempo)
+        self.disparar()
 
         for misil in disparos:
             if self.rectangulo.colliderect(misil.rectangulo):
