@@ -18,14 +18,14 @@ class NavePpal:
             self.imagen = self.animacion[self.frame]
             self.animacion_repetir = True
             
+            self.limite_disparos = 10
             self.velocidad = 5
             self.vidas = 3
             self.score = 0
-            self.limite_disparos = 10
             # self.superficie =  pygame.transform.scale(pygame.image.load(path),(ancho,alto))
             self.mostar = True
             self.disparos = []
-
+            self.velocidad_disparo = 5
 
             self.rectangulo = self.imagen.get_rect()
             self.rectangulo.centerx = posx

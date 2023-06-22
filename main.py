@@ -1,6 +1,7 @@
 import pygame
 import colores
-import helpers
+import random
+from helpers import *
 from enemigos import NaveVerde
 from personaje import NavePpal
 from constantes import *
@@ -20,32 +21,37 @@ clock = pygame.time.Clock()
 player = NavePpal(ANCHO_VENTANA/2,ALTO_VENTANA-100)
 
 #CREAMOS ENEMIGOS
-total_enemigos = range(7)
-lista_enemigos_verde = []
-lista_enemigos_azul = []
-lista_enemigos_rojo = []
+total_filas = range(3)
+total_columnas = range(7)
 
-for i in total_enemigos:
-    lista_enemigos_verde.append(NaveVerde(0+i*70,BASE_ENEMIGA ,TAMANIO_NAVE_ENEMIGA,TAMANIO_NAVE_ENEMIGA,10,"spiked1.PNG"))
-    lista_enemigos_azul.append(NaveVerde(0+i*70,BASE_ENEMIGA + TAMANIO_NAVE_ENEMIGA + 10,TAMANIO_NAVE_ENEMIGA,TAMANIO_NAVE_ENEMIGA,10,"spiked2.PNG"))
-    lista_enemigos_rojo.append(NaveVerde(0+i*70,BASE_ENEMIGA +(TAMANIO_NAVE_ENEMIGA + 10)*2,TAMANIO_NAVE_ENEMIGA,TAMANIO_NAVE_ENEMIGA,10,"spiked3.PNG"))
+lista_enemigos = []
+
+for i in total_columnas:
+    for j in total_filas:
+        tipo = random.randint(1,3)
+        tipo_nave = mandale_nave(tipo)
+        # self,posx,posy,puntaje,parametro
+        lista_enemigos.append(NaveVerde(i*TAMANIO_NAVE_ENEMIGA,j*TAMANIO_NAVE_ENEMIGA,10,tipo_nave))
+
+total_enemigos = range(7)
 
 #CREAMOS TEXTO
 fuente = pygame.font.SysFont("Arial",20)
 texto = fuente.render("PUNTAJE:", True, colores.COLOR_AMARILLO_ARENA)
 
 #Sentido de las naves
-sentido1 = True
-sentido2 = True
-sentido3 = True 
+# sentido1 = True
+# sentido2 = True
+# sentido3 = True 
 
 imagen_fondo = pygame.image.load(PATH_IMG+"fondo.png")
 imagen_fondo = pygame.transform.scale(imagen_fondo, (ANCHO_VENTANA, ALTO_VENTANA))
 pygame.mixer.music.load("music/stage1.mp3")
 
-pygame.mixer.music.set_volume(0.1)
+pygame.mixer.music.set_volume(0)
 
 pygame.mixer.music.play(-1)
+sentido = "DER"
 while flag_run:
     ventana_principal.blit(imagen_fondo,imagen_fondo.get_rect())
     # ventana_principal.fill(colores.COLOR_AZUL_MEDIANOCHE)
@@ -64,27 +70,19 @@ while flag_run:
                 player.control("SHOT")
 
         if evento.type == pygame.USEREVENT:
-            sentido1 = helpers.mover_naves(lista_enemigos_verde, ANCHO_VENTANA, TAMANIO_NAVE_ENEMIGA,sentido1)
-            sentido2 = helpers.mover_naves(lista_enemigos_azul, ANCHO_VENTANA, TAMANIO_NAVE_ENEMIGA,sentido2)
-            sentido3 = helpers.mover_naves(lista_enemigos_rojo, ANCHO_VENTANA, TAMANIO_NAVE_ENEMIGA,sentido3)
+            sentido = mover_naves(lista_enemigos, sentido)
 
     # PERSONAJE DRAW&UPDATE
     player.update()
     player.draw(ventana_principal)
     # SHOT DRAW
     for misil in player.disparos:
-        misil.actualizar_pantalla(ventana_principal)
+        misil.actualizar_pantalla(ventana_principal,player.velocidad)
     # ENEMY DRAW&UPDATE
-    for nave in lista_enemigos_verde:
+    for nave in lista_enemigos:
         nave.update(player.disparos)
         nave.draw(ventana_principal)
-    for nave in lista_enemigos_azul:
-        nave.update(player.disparos)
-        nave.draw(ventana_principal)
-    for nave in lista_enemigos_rojo:
-        nave.update(player.disparos)
-        nave.draw(ventana_principal)
-
+    
     pygame.display.flip()
 
 pygame.mixer.music.stop()
