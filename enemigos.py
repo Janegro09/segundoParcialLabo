@@ -6,10 +6,14 @@ from helpers import *
 from disparos import Disparar
 
 class Enemigos:
-    def __init__(self,posx,posy,puntaje,nivel,parametro) -> None:
+    def __init__(self,posx,posy,puntaje,nivel,parametro,tipo="") -> None:
 
         self.superficie = get_superficie_sprite(PATH_IMG+parametro,1,1)
-        self.superficie = escalar(self.superficie,(TAMANIO_NAVE_ENEMIGA,TAMANIO_NAVE_ENEMIGA))
+        if(tipo=="Boss"):
+            self.superficie = escalar(self.superficie,(TAMANIO_BOSS_ENEMIGA,TAMANIO_BOSS_ENEMIGA))
+        else:
+            self.superficie = escalar(self.superficie,(TAMANIO_NAVE_ENEMIGA,TAMANIO_NAVE_ENEMIGA))
+
         self.muere = get_superficie_sprite(PATH_IMG+"explosion.png",3,2)
         self.muere = escalar(self.muere)
         self.frame = 0
@@ -28,7 +32,7 @@ class Enemigos:
         self.tiempo = 0
 
         self.rectangulo = self.imagen.get_rect()
-        self.rectangulo.x = posx
+        self.rectangulo.centerx = posx
         self.rectangulo.y = posy
         
         self.mostrar = True
@@ -46,7 +50,8 @@ class Enemigos:
 
     def mover_izquierda(self):
         self.rectangulo.x -=self.velocidad
-
+    def intro_boss(self):
+        pass
     def mover(self, direccion):
         if(direccion):
             self.mover_derecha()

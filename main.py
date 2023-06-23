@@ -31,9 +31,13 @@ for i in total_columnas:
         tipo = random.randint(1,3)
         tipo_nave = mandale_nave(tipo)
         # self,posx,posy,puntaje,parametro
-        lista_enemigos.append(Enemigos(i*TAMANIO_NAVE_ENEMIGA,j*TAMANIO_NAVE_ENEMIGA,10,1,tipo_nave))
+        print(i*TAMANIO_NAVE_ENEMIGA,j*TAMANIO_NAVE_ENEMIGA)
+        lista_enemigos.append(Enemigos(i*TAMANIO_NAVE_ENEMIGA,j*TAMANIO_NAVE_ENEMIGA-TAMANIO_NAVE_ENEMIGA,10,1,tipo_nave))
 
-total_enemigos = range(7)
+#CREAMOS BOSS
+tipo_nave = mandale_boss(random.randint(1,2))
+boss = Enemigos(int(ANCHO_VENTANA/2),0,10,1,tipo_nave,"Boss")
+
 
 #CREAMOS TEXTO
 fuente = pygame.font.SysFont("Arial",20)
@@ -44,12 +48,14 @@ imagen_fondo = pygame.transform.scale(imagen_fondo, (ANCHO_VENTANA, ALTO_VENTANA
 
 #Sonido del juego
 pygame.mixer.music.load("music/stage1.mp3")
-pygame.mixer.music.set_volume(0)
+volumen = 1
+pygame.mixer.music.set_volume(volumen)
 pygame.mixer.music.play(-1)
 
 #Sentido de las naves enemigas
 sentido = "DER"
-
+final_boss = True
+entro = True
 while flag_run:
     ventana_principal.blit(imagen_fondo,imagen_fondo.get_rect())
     # ventana_principal.fill(colores.COLOR_AZUL_MEDIANOCHE)
@@ -80,15 +86,42 @@ while flag_run:
     # ENEMY DRAW&UPDATE
     total_enemigos_vivos = contar_enemigos_vivos(lista_enemigos)
     potenciador = 1 if total_enemigos_vivos==0 else int(len(lista_enemigos)/total_enemigos_vivos)
+    aumentar_limite_disparos = 0
     for nave in lista_enemigos:
         nave.update(delta_ms,potenciador,player.disparos)
         nave.draw(ventana_principal)
-        for misil in nave.disparos:
+        #Aumentamos los disparos si bajan los enemigos
+        nave.limite_disparos+=(len(lista_enemigos)-total_enemigos_vivos)
+
+        for misil in nave.disparos: 
             if not player.inmune:
                 if misil.rectangulo.colliderect(player.rectangulo):
                     player.control("DEAD")
                     misil.mostrar = False
             misil.actualizar_pantalla(ventana_principal,nave.velocidad_disparo,"enemigo")
+
+    if(total_enemigos_vivos==0 and final_boss):
+        
+        #Preparamos la intro para el boss
+        if(entro):
+            tiempo=0
+        tiempo+=delta_ms
+        entro = False
+        volumen = 500/tiempo
+        pygame.mixer.music.set_volume(volumen)
+        if volumen < 0.1:
+            pygame.mixer.music.play()
+            pygame.mixer.music.load("music/finalBoss.mp3")
+            pygame.mixer.music.play(-1)
+            final_boss = False
+            # boss.intro()
+    
+    if (not final_boss):
+        pygame.mixer.music.set_volume(1)
+        boss.update(delta_ms,potenciador,player.disparos)
+        boss.draw(ventana_principal)
+
+
     pygame.display.flip()
 
 pygame.mixer.music.stop()

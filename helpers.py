@@ -9,6 +9,14 @@ def mandale_nave(numero):
     if(numero == 3):
         return NAVE_ENEMIGA_3
 
+def mandale_boss(numero):
+    if numero == 1:
+        return NAVE_BOSS_1
+    
+    if numero == 2:
+        return NAVE_BOSS_2
+    
+
 def get_superficie_sprite(path, filas, columnas ):
     lista = []
     surface_image = pygame.image.load(path)
@@ -34,7 +42,7 @@ def mover_naves(lista, sentido):
     #DERECHA
     if(sentido == "DER"):
         for nave in lista:
-            if nave.rectangulo.x + TAMANIO_NAVE_ENEMIGA < ANCHO_VENTANA:
+            if nave.rectangulo.x  < ANCHO_VENTANA - TAMANIO_NAVE_ENEMIGA:
                 if(nave.mostrar):
                     nave.rectangulo.x+=nave.velocidad
             else:
