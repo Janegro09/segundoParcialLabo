@@ -21,8 +21,8 @@ clock = pygame.time.Clock()
 player = NavePpal(ANCHO_VENTANA/2,ALTO_VENTANA-100)
 
 #CREAMOS ENEMIGOS
-total_filas = range(3)
-total_columnas = range(8)
+total_filas = range(1)
+total_columnas = range(1)
 
 lista_enemigos = []
 
@@ -32,7 +32,7 @@ for i in total_columnas:
         tipo_nave = mandale_nave(tipo)
         # self,posx,posy,puntaje,parametro
         print(i*TAMANIO_NAVE_ENEMIGA,j*TAMANIO_NAVE_ENEMIGA)
-        lista_enemigos.append(Enemigos(i*TAMANIO_NAVE_ENEMIGA,j*TAMANIO_NAVE_ENEMIGA-TAMANIO_NAVE_ENEMIGA,10,1,tipo_nave))
+        lista_enemigos.append(Enemigos(i*TAMANIO_NAVE_ENEMIGA,j*TAMANIO_NAVE_ENEMIGA,10,1,tipo_nave))
 
 #CREAMOS BOSS
 tipo_nave = mandale_boss(random.randint(1,2))
@@ -56,6 +56,7 @@ pygame.mixer.music.play(-1)
 sentido = "DER"
 final_boss = True
 entro = True
+iniciar_intro = False
 while flag_run:
     ventana_principal.blit(imagen_fondo,imagen_fondo.get_rect())
     # ventana_principal.fill(colores.COLOR_AZUL_MEDIANOCHE)
@@ -114,12 +115,15 @@ while flag_run:
             pygame.mixer.music.load("music/finalBoss.mp3")
             pygame.mixer.music.play(-1)
             final_boss = False
-            # boss.intro()
+    
+    if iniciar_intro:
+        boss.intro_boss(delta_ms)
     
     if (not final_boss):
         pygame.mixer.music.set_volume(1)
         boss.update(delta_ms,potenciador,player.disparos)
         boss.draw(ventana_principal)
+        iniciar_intro = True
 
 
     pygame.display.flip()

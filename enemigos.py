@@ -11,8 +11,12 @@ class Enemigos:
         self.superficie = get_superficie_sprite(PATH_IMG+parametro,1,1)
         if(tipo=="Boss"):
             self.superficie = escalar(self.superficie,(TAMANIO_BOSS_ENEMIGA,TAMANIO_BOSS_ENEMIGA))
+            posy = -TAMANIO_BOSS_ENEMIGA
+            self.primera_pasada = True
+            self.velocidad = 3
         else:
             self.superficie = escalar(self.superficie,(TAMANIO_NAVE_ENEMIGA,TAMANIO_NAVE_ENEMIGA))
+            self.velocidad = 5
 
         self.muere = get_superficie_sprite(PATH_IMG+"explosion.png",3,2)
         self.muere = escalar(self.muere)
@@ -26,10 +30,10 @@ class Enemigos:
         self.frecuencia = random.randint(1,DIFICULTAD/nivel)
         self.disparo = False
         self.velocidad_disparo = 1*self.nivel
-        self.velocidad = 5
         self.sentido_derecho =True
         self.sentido_izquierdo = False
         self.tiempo = 0
+        self.tiempo_boss = 0
 
         self.rectangulo = self.imagen.get_rect()
         self.rectangulo.centerx = posx
@@ -50,8 +54,39 @@ class Enemigos:
 
     def mover_izquierda(self):
         self.rectangulo.x -=self.velocidad
-    def intro_boss(self):
-        pass
+    
+    def intro_boss(self, tiempo_ms):
+        if self.primera_pasada:
+            self.rectangulo.y+=10
+            if(self.rectangulo.y > ALTO_VENTANA):
+                self.primera_pasada=False
+                self.rectangulo.y=-ANCHO_VENTANA
+        else:
+            if(self.rectangulo.y < 0):
+                self.rectangulo.y+=5
+            else:
+                mover = random.randint(1,2)
+
+                if mover == 1 and self.sentido_derecho:
+                    self.tiempo_boss+=tiempo_ms
+                    if(self.rectangulo.x < ANCHO_VENTANA-TAMANIO_BOSS_ENEMIGA):
+                        self.mover_derecha()
+                    if(self.tiempo_boss > 500):
+                        self.tiempo_boss=0
+                        self.sentido_derecho = False
+                        self.sentido_izquierdo = True
+
+                if mover == 2 and self.sentido_izquierdo:
+                    self.tiempo_boss+=tiempo_ms
+                    if(self.rectangulo.x > 0):
+                        self.mover_izquierda()
+                    if(self.tiempo_boss > 500):
+                        self.tiempo_boss=0
+                        self.sentido_derecho = True
+                        self.sentido_izquierdo = False
+                        self.mover_izquierda()
+        
+
     def mover(self, direccion):
         if(direccion):
             self.mover_derecha()
