@@ -16,6 +16,7 @@ class NavePpal:
             self.imagen = self.animacion[self.frame]
             self.animacion_repetir = True
             self.tiempo = 0
+            self.tiempo_inmune = 0
             self.limite_disparos = 5
             self.velocidad = 5
             self.vidas = 3
@@ -56,24 +57,28 @@ class NavePpal:
     def update(self,tiempo):
 
         self.disparar()
+
         if(self.mostar):
             self.movimiento(tiempo)
+
         if(self.inmune):
-            self.tiempo+=tiempo
-            if(self.tiempo > 1000):
+            self.tiempo_inmune+=tiempo
+            if(self.tiempo_inmune > 1000):
                 self.limite_disparos = 5
                 self.inmune = False
+                self.tiempo_inmune=0
+
         if(self.animacion == self.muere):
             self.tiempo += tiempo
-            print(self.tiempo)
             if(self.tiempo > 1000):
                 self.vidas -=1
                 if(self.vidas > 0):
                     self.frame = 0
+                    self.tiempo = 0
                     self.animacion = self.quieto
                     self.mostar = True
                     self.animacion_repetir = True
-                    self.tiempo = 0
+                    self.inmune = True
                     self.rectangulo.centerx=int(ANCHO_VENTANA/2)
                 else:
                     #GAME OVER
@@ -98,7 +103,6 @@ class NavePpal:
             self.shot()
         if(accion == "DEAD"):
             self.animacion = self.muere
-            self.inmune = True
             self.limite_disparos = 0
             self.animacion_repetir = False
            
