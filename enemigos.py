@@ -27,7 +27,6 @@ class Enemigos:
             self.rect_shoot_collition = pygame.Rect(posx-TAMANIO_BOSS_ENEMIGA//10,posy,TAMANIO_BOSS_ENEMIGA//5,TAMANIO_BOSS_ENEMIGA)
             # self.rect_shoot_collition.centerx = posx
             # self.rect_shoot_collition.y = posy
-
         else:
             self.superficie = escalar(self.superficie,(TAMANIO_NAVE_ENEMIGA,TAMANIO_NAVE_ENEMIGA))
             self.velocidad = 5
@@ -129,14 +128,20 @@ class Enemigos:
         for misil in disparos:
             if(self.tipo=="Boss"):
                 if self.rect_shoot_collition.colliderect(misil.rectangulo):
-                    if(self.animacion != self.muere):
-                        self.animacion = self.muere
-                        misil.mostrar = False
+                    misil.mostrar = False
+                    if self.vidas < 0:
+                        if(self.animacion != self.muere):
+                            self.animacion = self.muere
+                    else:
+                        self.vidas-=1
             if(self.tipo=="Minion"):
                 if self.rectangulo.colliderect(misil.rectangulo):
-                    if(self.animacion != self.muere):
-                        self.animacion = self.muere
-                        misil.mostrar = False
+                    misil.mostrar = False
+                    if self.vidas < 0:
+                        if(self.animacion != self.muere):
+                            self.animacion = self.muere
+                    else:
+                        self.vidas-=1
         if(self.animacion == self.muere):
             if(self.frame < len(self.animacion)-1):
                 self.frame +=1

@@ -31,12 +31,13 @@ for i in total_columnas:
         tipo = random.randint(1,3)
         tipo_nave = mandale_nave(tipo)
         # print(i*TAMANIO_NAVE_ENEMIGA,j*TAMANIO_NAVE_ENEMIGA)
-        # self,posx,posy,puntaje,nivel,parametro,tipo="Minion",cantVidas=1
-        lista_enemigos.append(Enemigos(i*TAMANIO_NAVE_ENEMIGA,j*TAMANIO_NAVE_ENEMIGA,10,1,tipo_nave,"Minion",tipo))
+        #(self,posx,posy,puntaje,nivel,parametro,tipo="Minion",cantVidas=1) -> None:
+
+        lista_enemigos.append(Enemigos(i*TAMANIO_NAVE_ENEMIGA,j*TAMANIO_NAVE_ENEMIGA,10,1,tipo_nave,"Minion",100))
 
 #CREAMOS BOSS
 tipo_nave = mandale_boss(random.randint(1,2))
-boss = Enemigos(int(ANCHO_VENTANA/2),0,10,1,tipo_nave,"Boss",1)
+boss = Enemigos(int(ANCHO_VENTANA/2),0,10,1,tipo_nave,"Boss",100)
 
 
 #CREAMOS TEXTO

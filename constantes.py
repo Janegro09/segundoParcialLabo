@@ -4,7 +4,7 @@ import colores
 ALTO_VENTANA = 600
 ANCHO_VENTANA = 720
 FPS = 60
-DEBUG=True
+DEBUG=False
 
 #IMAGENES
 PATH_IMG = "img/"
