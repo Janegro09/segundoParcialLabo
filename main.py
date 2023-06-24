@@ -22,7 +22,7 @@ player = NavePpal(ANCHO_VENTANA/2,ALTO_VENTANA-100)
 
 #CREAMOS ENEMIGOS
 total_filas = range(2)
-total_columnas = range(10)
+total_columnas = range(1)
 
 lista_enemigos = []
 

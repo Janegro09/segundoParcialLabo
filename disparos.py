@@ -22,6 +22,8 @@ class Disparar:
 
     def actualizar_pantalla(self,pantalla,velocidad,tipo="normal"):
         self.mover(velocidad,tipo)
+        if(DEBUG):
+            pygame.draw.rect(pantalla,colores.COLOR_AMARILLO_ARENA, self.rectangulo)
         # pygame.draw.rect(pantalla, colores.COLOR_ROJO_INDIAN, self.rectangulo)
         if self.mostrar:
             pantalla.blit(self.surface_image, self.rectangulo)

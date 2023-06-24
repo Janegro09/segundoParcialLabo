@@ -24,6 +24,10 @@ class Enemigos:
             self.limite_disparos_boss = []
             self.animacion_repetir = False
             self.tiempo_muerto = 0
+            self.rect_shoot_collition = pygame.Rect(posx-TAMANIO_BOSS_ENEMIGA//10,posy,TAMANIO_BOSS_ENEMIGA//5,TAMANIO_BOSS_ENEMIGA)
+            # self.rect_shoot_collition.centerx = posx
+            # self.rect_shoot_collition.y = posy
+
         else:
             self.superficie = escalar(self.superficie,(TAMANIO_NAVE_ENEMIGA,TAMANIO_NAVE_ENEMIGA))
             self.velocidad = 5
@@ -68,9 +72,11 @@ class Enemigos:
 
     def mover_derecha(self):
         self.rectangulo.x +=self.velocidad
+        self.rect_shoot_collition.x +=self.velocidad
 
     def mover_izquierda(self):
         self.rectangulo.x -=self.velocidad
+        self.rect_shoot_collition.x -=self.velocidad
     
     def intro_boss(self, tiempo_ms):
         if self.primera_pasada:
@@ -78,9 +84,11 @@ class Enemigos:
             if(self.rectangulo.y > ALTO_VENTANA):
                 self.primera_pasada=False
                 self.rectangulo.y=-ANCHO_VENTANA
+                self.rect_shoot_collition.y=-ANCHO_VENTANA
         else:
             if(self.rectangulo.y < 0):
                 self.rectangulo.y+=5
+                self.rect_shoot_collition.y+=5
             else:
                 mover = random.randint(1,2)
 
@@ -119,10 +127,16 @@ class Enemigos:
                 self.disparos.pop(0)    
 
         for misil in disparos:
-            if self.rectangulo.colliderect(misil.rectangulo):
-                if(self.animacion != self.muere):
-                    self.animacion = self.muere
-                    misil.mostrar = False
+            if(self.tipo=="Boss"):
+                if self.rect_shoot_collition.colliderect(misil.rectangulo):
+                    if(self.animacion != self.muere):
+                        self.animacion = self.muere
+                        misil.mostrar = False
+            if(self.tipo=="Minion"):
+                if self.rectangulo.colliderect(misil.rectangulo):
+                    if(self.animacion != self.muere):
+                        self.animacion = self.muere
+                        misil.mostrar = False
         if(self.animacion == self.muere):
             if(self.frame < len(self.animacion)-1):
                 self.frame +=1
@@ -141,8 +155,13 @@ class Enemigos:
         self.imagen = self.animacion[self.frame]
 
     def draw(self,pantalla):
+        if(DEBUG):
+            pygame.draw.rect(pantalla,colores.COLOR_AMARILLO_ARENA, self.rectangulo)
+            if(self.tipo=="Boss"):
+                pygame.draw.rect(pantalla,colores.COLOR_ROJO, self.rect_shoot_collition)
         if(self.mostrar):
             pantalla.blit(self.imagen, self.rectangulo)
+            
 
     @property
     def posicion(self):

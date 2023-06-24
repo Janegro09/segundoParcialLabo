@@ -86,7 +86,8 @@ class NavePpal:
             # self.limite_disparos=0
 
     def draw(self,pantalla):
-        # pygame.draw.rect(pantalla, colores.COLOR_ROJO_INDIAN, self.rectangulo)
+        if(DEBUG):
+            pygame.draw.rect(pantalla,colores.COLOR_AMARILLO_ARENA, self.rectangulo)
         if(self.mostar):
             self.imagen = self.animacion[self.frame]
             pantalla.blit(self.imagen, self.rectangulo)
