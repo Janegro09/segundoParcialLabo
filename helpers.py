@@ -47,6 +47,7 @@ def mover_naves(lista, sentido):
                     nave.rectangulo.x+=nave.velocidad
             else:
                 bajar_naves(lista)
+                # nave.velocidad+=1
                 sentido = "IZQ"
     #IZQUIERDA
     if(sentido == "IZQ"):
@@ -56,6 +57,7 @@ def mover_naves(lista, sentido):
                     nave.rectangulo.x-=nave.velocidad
             else:
                 bajar_naves(lista)
+                # nave.velocidad+=1
                 sentido = "DER"
 
     return sentido

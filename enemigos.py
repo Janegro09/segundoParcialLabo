@@ -6,34 +6,40 @@ from helpers import *
 from disparos import Disparar
 
 class Enemigos:
-    def __init__(self,posx,posy,puntaje,nivel,parametro,tipo="") -> None:
+    def __init__(self,posx,posy,puntaje,nivel,parametro,tipo="Minion",cantVidas=1) -> None:
 
         self.superficie = get_superficie_sprite(PATH_IMG+parametro,1,1)
+        self.vidas = cantVidas
+        self.muere = get_superficie_sprite(PATH_IMG+"explosion.png",3,2)
+        self.tipo = tipo
+        self.nivel = nivel
         if(tipo=="Boss"):
             self.superficie = escalar(self.superficie,(TAMANIO_BOSS_ENEMIGA,TAMANIO_BOSS_ENEMIGA))
             posy = -TAMANIO_BOSS_ENEMIGA
             self.primera_pasada = True
             self.velocidad = 3
+            self.muere = escalar(self.muere,(TAMANIO_BOSS_ENEMIGA,TAMANIO_BOSS_ENEMIGA))
+            self.frecuencia = random.randint(2500,10000)
+            self.velocidad_disparo = 1.25*self.nivel
         else:
             self.superficie = escalar(self.superficie,(TAMANIO_NAVE_ENEMIGA,TAMANIO_NAVE_ENEMIGA))
             self.velocidad = 5
+            self.muere = escalar(self.muere)
+            self.frecuencia = random.randint(2500,20000)
 
-        self.muere = get_superficie_sprite(PATH_IMG+"explosion.png",3,2)
-        self.muere = escalar(self.muere)
         self.frame = 0
-        self.nivel = nivel
         self.animacion = self.superficie
         self.imagen = self.animacion[self.frame]
         self.animacion_repetir = True
-        self.limite_disparos = 10
         self.disparos = []
-        self.frecuencia = random.randint(1,DIFICULTAD/nivel)
+        self.limite_disparos = random.randint(1,10)
         self.disparo = False
         self.velocidad_disparo = 1*self.nivel
         self.sentido_derecho =True
         self.sentido_izquierdo = False
         self.tiempo = 0
         self.tiempo_boss = 0
+        self.tiempo_disparo = 0
 
         self.rectangulo = self.imagen.get_rect()
         self.rectangulo.centerx = posx
@@ -43,11 +49,19 @@ class Enemigos:
         self.puntaje = puntaje
 
     def disparar(self,potenciador):
-        if self.tiempo % int(self.frecuencia/potenciador) == 0:
-            if (self.limite_disparos > len(self.disparos) and self.mostrar) :
-                disparo = Disparar(self.rectangulo.centerx, self.rectangulo.y,"enemigo")
-                self.disparo = True
-                self.disparos.append(disparo)
+        if(self.tipo =="Minion"):
+            if self.tiempo > self.frecuencia:
+                self.tiempo = 0
+                if (self.limite_disparos > len(self.disparos) and self.mostrar) :
+                    disparo = Disparar(self.rectangulo.centerx, self.rectangulo.y,"Minion")
+                    self.disparo = True
+                    self.disparos.append(disparo)
+        if(self.tipo == "Boss"):
+            if self.tiempo > self.frecuencia:
+                if (self.limite_disparos > len(self.disparos) and self.mostrar) :
+                    disparo = Disparar(self.rectangulo.centerx, self.rectangulo.y,"Boss")
+                    self.disparo = True
+                    self.disparos.append(disparo)
 
     def mover_derecha(self):
         self.rectangulo.x +=self.velocidad
@@ -71,7 +85,7 @@ class Enemigos:
                     self.tiempo_boss+=tiempo_ms
                     if(self.rectangulo.x < ANCHO_VENTANA-TAMANIO_BOSS_ENEMIGA):
                         self.mover_derecha()
-                    if(self.tiempo_boss > 500):
+                    if(self.tiempo_boss > 750):
                         self.tiempo_boss=0
                         self.sentido_derecho = False
                         self.sentido_izquierdo = True
@@ -80,13 +94,12 @@ class Enemigos:
                     self.tiempo_boss+=tiempo_ms
                     if(self.rectangulo.x > 0):
                         self.mover_izquierda()
-                    if(self.tiempo_boss > 500):
+                    if(self.tiempo_boss > 750):
                         self.tiempo_boss=0
                         self.sentido_derecho = True
                         self.sentido_izquierdo = False
                         self.mover_izquierda()
         
-
     def mover(self, direccion):
         if(direccion):
             self.mover_derecha()
