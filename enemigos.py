@@ -129,7 +129,7 @@ class Enemigos:
             if(self.tipo=="Boss"):
                 if self.rect_shoot_collition.colliderect(misil.rectangulo):
                     misil.mostrar = False
-                    if self.vidas < 0:
+                    if self.vidas > 0:
                         if(self.animacion != self.muere):
                             self.animacion = self.muere
                     else:
@@ -137,7 +137,7 @@ class Enemigos:
             if(self.tipo=="Minion"):
                 if self.rectangulo.colliderect(misil.rectangulo):
                     misil.mostrar = False
-                    if self.vidas < 0:
+                    if self.vidas > 0:
                         if(self.animacion != self.muere):
                             self.animacion = self.muere
                     else:
@@ -153,6 +153,7 @@ class Enemigos:
                     if(self.tiempo_muerto > 500):
                         self.mostrar = True
                     else:
+                        self.mostrar = False
                         self.frame=0
                         self.limite_disparos=0
                         self.limite_disparos_boss=[]
