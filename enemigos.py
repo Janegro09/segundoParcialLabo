@@ -19,18 +19,21 @@ class Enemigos:
             self.primera_pasada = True
             self.velocidad = 3
             self.muere = escalar(self.muere,(TAMANIO_BOSS_ENEMIGA,TAMANIO_BOSS_ENEMIGA))
-            self.frecuencia = random.randint(2500,10000)
-            self.velocidad_disparo = 1.25*self.nivel
+            self.frecuencia = random.randint(2500,7500)
+            self.nivel = 10
+            self.limite_disparos_boss = []
+            self.animacion_repetir = False
+            self.tiempo_muerto = 0
         else:
             self.superficie = escalar(self.superficie,(TAMANIO_NAVE_ENEMIGA,TAMANIO_NAVE_ENEMIGA))
             self.velocidad = 5
             self.muere = escalar(self.muere)
             self.frecuencia = random.randint(2500,20000)
+            self.animacion_repetir = True
 
         self.frame = 0
         self.animacion = self.superficie
         self.imagen = self.animacion[self.frame]
-        self.animacion_repetir = True
         self.disparos = []
         self.limite_disparos = random.randint(1,10)
         self.disparo = False
@@ -48,7 +51,7 @@ class Enemigos:
         self.mostrar = True
         self.puntaje = puntaje
 
-    def disparar(self,potenciador):
+    def disparar(self,delta_ms):
         if(self.tipo =="Minion"):
             if self.tiempo > self.frecuencia:
                 self.tiempo = 0
@@ -59,7 +62,7 @@ class Enemigos:
         if(self.tipo == "Boss"):
             if self.tiempo > self.frecuencia:
                 if (self.limite_disparos > len(self.disparos) and self.mostrar) :
-                    disparo = Disparar(self.rectangulo.centerx, self.rectangulo.y,"Boss")
+                    disparo = Disparar(self.rectangulo.centerx, self.rectangulo.centery,"Boss")
                     self.disparo = True
                     self.disparos.append(disparo)
 
@@ -124,7 +127,16 @@ class Enemigos:
             if(self.frame < len(self.animacion)-1):
                 self.frame +=1
             else:
-                self.mostrar = False
+                if(self.animacion_repetir):
+                    self.mostrar = False
+                else:
+                    self.tiempo_muerto +=delta_ms 
+                    if(self.tiempo_muerto > 500):
+                        self.mostrar = True
+                    else:
+                        self.frame=0
+                        self.limite_disparos=0
+                        self.limite_disparos_boss=[]
 
         self.imagen = self.animacion[self.frame]
 

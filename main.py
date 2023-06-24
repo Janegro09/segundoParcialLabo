@@ -21,8 +21,8 @@ clock = pygame.time.Clock()
 player = NavePpal(ANCHO_VENTANA/2,ALTO_VENTANA-100)
 
 #CREAMOS ENEMIGOS
-total_filas = range(3)
-total_columnas = range(8)
+total_filas = range(2)
+total_columnas = range(10)
 
 lista_enemigos = []
 
@@ -131,7 +131,7 @@ while flag_run:
                 if misil.rectangulo.colliderect(player.rectangulo):
                     player.control("DEAD")
                     misil.mostrar = False
-            misil.actualizar_pantalla(ventana_principal,nave.velocidad_disparo,"Boss")
+            misil.actualizar_pantalla(ventana_principal,boss.velocidad_disparo,"Boss")
 
     pygame.display.flip()
 
