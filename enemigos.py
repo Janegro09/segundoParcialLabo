@@ -151,9 +151,9 @@ class Enemigos:
                 else:
                     self.tiempo_muerto +=delta_ms 
                     if(self.tiempo_muerto > 500):
-                        self.mostrar = True
-                    else:
                         self.mostrar = False
+                    else:
+                        # self.mostrar = True
                         self.frame=0
                         self.limite_disparos=0
                         self.limite_disparos_boss=[]
