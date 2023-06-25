@@ -39,26 +39,24 @@ def escalar(lista, tam = TAM):
 
 
 def mover_naves(lista, sentido):
-    #DERECHA
-    if(sentido == "DER"):
-        for nave in lista:
-            if nave.rectangulo.x  < ANCHO_VENTANA - TAMANIO_NAVE_ENEMIGA:
-                if(nave.mostrar):
+    for nave in lista:
+        if(nave.mostrar):
+            print(nave.rectangulo.x)
+            if(sentido == "DER"):
+                if nave.rectangulo.x + nave.velocidad < ANCHO_VENTANA - TAMANIO_NAVE_ENEMIGA:
                     nave.rectangulo.x+=nave.velocidad
+                else:
+                    nave.rectangulo.x+=nave.velocidad
+                    bajar_naves(lista)
+                    sentido = "IZQ"
             else:
-                bajar_naves(lista)
-                # nave.velocidad+=1
-                sentido = "IZQ"
-    #IZQUIERDA
-    if(sentido == "IZQ"):
-        for nave in lista:
-            if nave.rectangulo.x > 0:
-                if(nave.mostrar):
+            # if(sentido == "IZQ"):
+                if nave.rectangulo.x > 0:
                     nave.rectangulo.x-=nave.velocidad
-            else:
-                bajar_naves(lista)
-                # nave.velocidad+=1
-                sentido = "DER"
+                else:
+                    nave.rectangulo.x-=nave.velocidad
+                    bajar_naves(lista)
+                    sentido = "DER"
 
     return sentido
 

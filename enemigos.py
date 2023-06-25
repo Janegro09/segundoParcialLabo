@@ -69,13 +69,30 @@ class Enemigos:
                     self.disparo = True
                     self.disparos.append(disparo)
 
+    def mover(self, direccion):
+        if(direccion=="DER"):
+            self.mover_derecha()
+        if(direccion=="IZQ"):
+            self.mover_izquierda()
+        if(direccion=="ABAJO"):
+            self.mover_abajo()
+
+    def mover_abajo(self):
+        if(self.tipo != "Boss"):
+            if((self.rectangulo.y + TAMANIO_NAVE_ENEMIGA//2 ) < ANCHO_VENTANA):
+                self.rectangulo.y += TAMANIO_NAVE_ENEMIGA // 2
+            
     def mover_derecha(self):
-        self.rectangulo.x +=self.velocidad
-        self.rect_shoot_collition.x +=self.velocidad
+        if((self.rectangulo.x + self.velocidad) < ANCHO_VENTANA):
+            self.rectangulo.x +=self.velocidad
+            if(self.tipo == "Boss"):
+                self.rect_shoot_collition.x +=self.velocidad
 
     def mover_izquierda(self):
-        self.rectangulo.x -=self.velocidad
-        self.rect_shoot_collition.x -=self.velocidad
+        if (self.rectangulo.x - self.velocidad) > 0:
+            self.rectangulo.x -=self.velocidad
+            if(self.tipo == "Boss"):
+                self.rect_shoot_collition.x -=self.velocidad
     
     def intro_boss(self, tiempo_ms):
         if self.primera_pasada:
@@ -110,12 +127,6 @@ class Enemigos:
                         self.sentido_izquierdo = False
                         self.mover_izquierda()
         
-    def mover(self, direccion):
-        if(direccion):
-            self.mover_derecha()
-        else:
-            self.mover_izquierda()
-
     def update(self,delta_ms,potenciador,disparos=[]):
 
         self.tiempo+=delta_ms
@@ -128,20 +139,20 @@ class Enemigos:
         for misil in disparos:
             if(self.tipo=="Boss"):
                 if self.rect_shoot_collition.colliderect(misil.rectangulo):
+                    self.vidas-=1
                     misil.mostrar = False
-                    if self.vidas > 0:
+                    if self.vidas == 0:
                         if(self.animacion != self.muere):
                             self.animacion = self.muere
-                    else:
-                        self.vidas-=1
+                            self.sentido_derecho = False
+                            self.sentido_izquierdo = False
             if(self.tipo=="Minion"):
                 if self.rectangulo.colliderect(misil.rectangulo):
+                    self.vidas-=1
                     misil.mostrar = False
-                    if self.vidas > 0:
+                    if self.vidas == 0:
                         if(self.animacion != self.muere):
                             self.animacion = self.muere
-                    else:
-                        self.vidas-=1
         if(self.animacion == self.muere):
             if(self.frame < len(self.animacion)-1):
                 self.frame +=1

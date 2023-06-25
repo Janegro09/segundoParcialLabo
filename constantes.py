@@ -5,7 +5,8 @@ ALTO_VENTANA = 600
 ANCHO_VENTANA = 720
 FPS = 60
 DEBUG=False
-
+#TEXTO
+TAM_SCORE = 15
 #IMAGENES
 PATH_IMG = "img/"
 PATH_MSC = "music/"
@@ -24,5 +25,6 @@ NAVE_BOSS_2 = "shipboss2.png"
 #PLAYER
 VELOCIDAD_NAVE_PPAL=5
 VIDAS = 3
+TAM_VIDAS = (30,20)
 imagen_player = pygame.image.load(PATH_IMG+"player_ship.png")
 TAM = (int(imagen_player.get_width()/4),imagen_player.get_height())
