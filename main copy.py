@@ -21,7 +21,7 @@ clock = pygame.time.Clock()
 player = NavePpal(ANCHO_VENTANA/2,ALTO_VENTANA-100)
 
 #CREAMOS ENEMIGOS
-total_filas = range(2)
+total_filas = range(1)
 total_columnas = range(10)
 
 lista_enemigos = []
@@ -64,8 +64,6 @@ while flag_run:
     player.control("STAY")
 
     lista_eventos = pygame.event.get()
-    # ENEMY DRAW&UPDATE
-    total_enemigos_vivos = contar_enemigos_vivos(lista_enemigos)
     for evento in lista_eventos:
         if (evento.type == pygame.QUIT):
             flag_run = False
@@ -75,9 +73,7 @@ while flag_run:
                 player.control("SHOT")
 
         if evento.type == pygame.USEREVENT:
-            #Corto antes de que la lista de mover naves para mostrar sean vacias
             sentido = mover_naves(lista_enemigos, sentido)
-            # if(len(lista_enemigos) - total_enemigos_vivos) !=len(lista_enemigos) :
 
     # PERSONAJE DRAW&UPDATE
     player.update(delta_ms)
@@ -86,6 +82,8 @@ while flag_run:
     for misil in player.disparos:
         misil.actualizar_pantalla(ventana_principal,player.velocidad)
 
+    # ENEMY DRAW&UPDATE
+    total_enemigos_vivos = contar_enemigos_vivos(lista_enemigos)
     potenciador = 1 if total_enemigos_vivos==0 else int(len(lista_enemigos)/total_enemigos_vivos)
     aumentar_limite_disparos = 0
     puntuacion = 0

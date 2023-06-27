@@ -37,28 +37,59 @@ def escalar(lista, tam = TAM):
         nueva_lista.append(nueva_img)
     return nueva_lista
 
-
 def mover_naves(lista, sentido):
-    for nave in lista:
-        if(nave.mostrar):
-            print(nave.rectangulo.x)
-            if(sentido == "DER"):
-                if nave.rectangulo.x + nave.velocidad < ANCHO_VENTANA - TAMANIO_NAVE_ENEMIGA:
-                    nave.rectangulo.x+=nave.velocidad
-                else:
-                    nave.rectangulo.x+=nave.velocidad
-                    bajar_naves(lista)
-                    sentido = "IZQ"
-            else:
-            # if(sentido == "IZQ"):
-                if nave.rectangulo.x > 0:
-                    nave.rectangulo.x-=nave.velocidad
-                else:
-                    nave.rectangulo.x-=nave.velocidad
-                    bajar_naves(lista)
-                    sentido = "DER"
+    max_x = maximo(lista)
+    min_x = minimo(lista)
+    if not max_x : return sentido
+    if not min_x : return sentido
 
+    if sentido == "DER":
+        if max_x.rectangulo.x < ANCHO_VENTANA - TAMANIO_NAVE_ENEMIGA:
+            for nave in lista:
+                if nave.mostrar:
+                    nave.rectangulo.x += nave.velocidad
+        else:
+            for nave in lista:
+                if nave.mostrar:
+                    nave.mover_abajo()
+            sentido = "IZQ"
+
+    elif sentido == "IZQ":
+        if min_x.rectangulo.x > 0:
+            for nave in lista:
+                if nave.mostrar:
+                    nave.rectangulo.x -= nave.velocidad
+        else:
+            for nave in lista:
+                if nave.mostrar:
+                    nave.mover_abajo()
+            sentido = "DER"
+    
     return sentido
+
+def maximo(lista):
+    max_valor = lista[0]
+    flag = False
+    for valor in lista:
+        if(valor.mostrar):
+            flag = True
+            if valor.rectangulo.x > max_valor.rectangulo.x:
+                max_valor = valor
+    if(not(flag)):
+        max_valor = False
+    return max_valor
+
+def minimo(lista):
+    min_valor = lista[0]
+    flag = False
+    for valor in lista:
+        if(valor.mostrar):
+            flag = True
+            if valor.rectangulo.x < min_valor.rectangulo.x:
+                min_valor = valor
+    if not(flag):
+        min_valor = False
+    return min_valor
 
 def bajar_naves(lista):
     for nave in lista:
