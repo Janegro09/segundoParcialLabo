@@ -88,6 +88,7 @@ while flag_run:
             form_menu_game_over.set_puntaje(puntuacion)
             form_menu_game_over.set_active("form_menu_game_over")
             pygame.mixer.music.set_volume(0)
+            player = NavePpal(ANCHO_VENTANA/2,ALTO_VENTANA-100)
 
             nivel = 1
             nivel_actual=1
@@ -136,6 +137,22 @@ while flag_run:
         aumentar_limite_disparos = 0
 
         for nave in lista_enemigos:
+            ##Si las naves colisionan con el jugador GAME OVER
+            if nave.rectangulo.colliderect(player.rectangulo):
+                player.control("DEAD")
+                form_menu.set_iniciar_juego
+                form_menu_game_over.set_puntaje(puntuacion)
+                form_menu_game_over.set_active("form_menu_game_over")
+                pygame.mixer.music.set_volume(0)
+                player = NavePpal(ANCHO_VENTANA/2,ALTO_VENTANA-100)
+
+                nivel = 1
+                nivel_actual=1
+                puntuacion = 0
+                lvl_final =False
+                entro = True
+                final_boss = True
+                iniciar_intro = False
             # puntuacion+=nave.puntaje
             if(nave.mostrar):
                 nave.update(delta_ms,potenciador,player.disparos)
@@ -195,9 +212,17 @@ while flag_run:
         posvidas = (ANCHO_VENTANA,ALTO_VENTANA)
         
         if(player.vidas==0):
-            form_menu.set_iniciar_juego()
+            form_menu.set_iniciar_juego
             form_menu_game_over.set_puntaje(puntuacion)
             form_menu_game_over.set_active("form_menu_game_over")
+            nivel = 1
+            nivel_actual=1
+            puntuacion = 0
+            lvl_final =False
+            entro = True
+            final_boss = True
+            iniciar_intro = False
+            player = NavePpal(ANCHO_VENTANA/2,ALTO_VENTANA-100)
 
         for elem in range(player.vidas):
             vida = pygame.image.load(PATH_IMG+"ship.png")
