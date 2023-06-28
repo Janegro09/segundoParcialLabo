@@ -69,22 +69,22 @@ def mover_naves(lista, sentido):
 
 def obtener_filas(nivel):
     if(nivel==1):
-        return 1
+        return ENEMIGOS_FILA_LVL1
     if(nivel==2):
-        return 1
+        return ENEMIGOS_FILA_LVL2
     if(nivel>=3):
-        return 1
+        return ENEMIGOS_FILA_LVL3
 def obtener_columnas(nivel):
     if(nivel == 1):
-        return 1
+        return ENEMIGOS_COL_LVL1
     if(nivel == 2):
-        return 1
+        return ENEMIGOS_COL_LVL2
     if(nivel == 3):
-        return 1
+        return ENEMIGOS_COL_LVL3
     if(nivel == 4):
-        return 1
-    if(nivel <= 5):
-        return 1
+        return ENEMIGOS_COL_LVL4
+    if(nivel >= 5):
+        return ENEMIGOS_COL_LVL5
 
 def maximo(lista):
     max_valor = lista[0]
