@@ -1,0 +1,23 @@
+[
+    {
+      "nombre": "Jugador 1",
+      "puntaje": 100
+    },
+    {
+      "nombre": "Jugador 2",
+      "puntaje": 85
+    },
+    {
+      "nombre": "Jugador 3",
+      "puntaje": 70
+    },
+    {
+      "nombre": "Jugador 4",
+      "puntaje": 95
+    },
+    {
+      "nombre": "Jugador 5",
+      "puntaje": 120
+    }
+  ]
+  

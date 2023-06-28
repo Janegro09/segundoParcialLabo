@@ -22,6 +22,7 @@ NAVE_ENEMIGA_2 = "spiked2.png"
 NAVE_ENEMIGA_3 = "spiked3.png"
 NAVE_BOSS_1 = "shipboss1.png"
 NAVE_BOSS_2 = "shipboss2.png"
+NAVE_BOSS_3 = "final.png"
 #PLAYER
 VELOCIDAD_NAVE_PPAL=5
 VIDAS = 3

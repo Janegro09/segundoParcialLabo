@@ -67,6 +67,25 @@ def mover_naves(lista, sentido):
     
     return sentido
 
+def obtener_filas(nivel):
+    if(nivel==1):
+        return 1
+    if(nivel==2):
+        return 1
+    if(nivel>=3):
+        return 1
+def obtener_columnas(nivel):
+    if(nivel == 1):
+        return 1
+    if(nivel == 2):
+        return 1
+    if(nivel == 3):
+        return 1
+    if(nivel == 4):
+        return 1
+    if(nivel <= 5):
+        return 1
+
 def maximo(lista):
     max_valor = lista[0]
     flag = False
