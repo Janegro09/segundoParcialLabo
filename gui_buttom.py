@@ -9,14 +9,14 @@ class Button(Widget):
         pygame.font.init()
         self.on_click = on_click
         self.on_click_param = on_click_param
-        self._text = text
+        self.text = text
         self.font_sys = pygame.font.SysFont(font,font_size)
         self.font_size = font_size
         self.font_color = font_color
         self.render()
         
     def render(self):
-        image_text = self.font_sys.render(self._text,True,self.font_color,self.color_back)
+        image_text = self.font_sys.render(self.text,True,self.font_color,self.color_back)
 
         self.slave_surface = pygame.Surface((self.w,self.h))
         self.slave_rect = self.slave_surface.get_rect()
@@ -31,6 +31,8 @@ class Button(Widget):
         # pygame.draw.rect(self.slave_surface,self.color_border,self.slave_rect)
         self.slave_surface.fill(self.color_back)
         self.slave_surface.blit(image_text,(10,10))
+    def set_nombre(self,nombre):
+        self.text = nombre
 
     def update(self, lista_eventos):
         for evento in lista_eventos:

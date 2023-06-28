@@ -43,21 +43,18 @@ puntuacion = 0
 lvl_final =False
 while flag_run:
     
-    if nivel == 2:
-        entro = False
-        final_boss = False
-        iniciar_intro = True
-        form_menu_game_over.set_puntaje(puntuacion)
- 
-        form_menu_game_over.set_active("form_menu_game_over")
-        pygame.mixer.music.set_volume(0)
 
-    if(nivel == nivel_actual and nivel_actual<=5):
+    if(nivel == nivel_actual and nivel_actual <= 5):
         #CREAMOS ENEMIGOS
+        if nivel == 5:
+            entro = False
+            final_boss = False
+            iniciar_intro = True
+        else:
+            entro = True
+            final_boss = True
+            iniciar_intro = False
             
-        entro = True
-        final_boss = True
-        iniciar_intro = False
         nivel_actual+=1
         tipo_nave = mandale_boss(random.randint(1,2))
         #CREAMOS BOSS
@@ -83,8 +80,12 @@ while flag_run:
         pygame.mixer.music.set_volume(volumen)
         pygame.mixer.music.play(-1)
 
-    if(nivel > 5):
-        print("entro")
+    if(nivel == 2):
+
+        form_menu_game_over.set_puntaje(puntuacion)
+        form_menu_game_over.set_active("form_menu_game_over")
+        pygame.mixer.music.set_volume(0)
+
         nivel = 1
         nivel_actual=1
         puntuacion = 0
