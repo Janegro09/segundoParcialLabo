@@ -52,13 +52,14 @@ while flag_run:
                 entro = False
                 final_boss = False
                 iniciar_intro = True
+                tipo_nave = NAVE_BOSS_3
             else:
                 entro = True
                 final_boss = True
                 iniciar_intro = False
+                tipo_nave = mandale_boss(random.randint(1,2))
                 
             nivel_actual+=1
-            tipo_nave = mandale_boss(random.randint(1,2))
             #CREAMOS BOSS
             boss = Enemigos(int(ANCHO_VENTANA/2),100,10,nivel,tipo_nave,"Boss",20)
 

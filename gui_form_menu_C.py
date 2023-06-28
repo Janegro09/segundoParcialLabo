@@ -23,7 +23,7 @@ class FormMenuC(Form):
         self.botonF = Button(master_surface=self.slave_surface,x=300,y=150,w=50,h=50,color_back=colores.COLOR_AZUL, color_border=colores.COLOR_AMARILLO_MOSTAZA, on_click=self.set_nombre, on_click_param="F",text="F",font="arial",font_size=15,font_color=colores.COLOR_AMARILLO_MOSTAZA)
         self.botonG = Button(master_surface=self.slave_surface,x=350,y=150,w=50,h=50,color_back=colores.COLOR_AZUL, color_border=colores.COLOR_AMARILLO_MOSTAZA, on_click=self.set_nombre, on_click_param="G",text="G",font="arial",font_size=15,font_color=colores.COLOR_AMARILLO_MOSTAZA)
         self.botonH = Button(master_surface=self.slave_surface,x=400,y=150,w=50,h=50,color_back=colores.COLOR_AZUL, color_border=colores.COLOR_AMARILLO_MOSTAZA, on_click=self.set_nombre, on_click_param="H",text="H",font="arial",font_size=15,font_color=colores.COLOR_AMARILLO_MOSTAZA)
-        self.botonI = Button(master_surface=self.slave_surface,x=400,y=150,w=50,h=50,color_back=colores.COLOR_AZUL, color_border=colores.COLOR_AMARILLO_MOSTAZA, on_click=self.set_nombre, on_click_param="I",text="I",font="arial",font_size=15,font_color=colores.COLOR_AMARILLO_MOSTAZA)
+        self.botonI = Button(master_surface=self.slave_surface,x=450,y=150,w=50,h=50,color_back=colores.COLOR_AZUL, color_border=colores.COLOR_AMARILLO_MOSTAZA, on_click=self.set_nombre, on_click_param="I",text="I",font="arial",font_size=15,font_color=colores.COLOR_AMARILLO_MOSTAZA)
 
         self.botonJ = Button(master_surface=self.slave_surface,x=50,y=200,w=50,h=50,color_back=colores.COLOR_AZUL, color_border=colores.COLOR_AMARILLO_MOSTAZA, on_click=self.set_nombre, on_click_param="J",text="J",font="arial",font_size=15,font_color=colores.COLOR_AMARILLO_MOSTAZA)
         self.botonK = Button(master_surface=self.slave_surface,x=100,y=200,w=50,h=50,color_back=colores.COLOR_AZUL, color_border=colores.COLOR_AMARILLO_MOSTAZA, on_click=self.set_nombre, on_click_param="K",text="K",font="arial",font_size=15,font_color=colores.COLOR_AMARILLO_MOSTAZA)
@@ -33,7 +33,7 @@ class FormMenuC(Form):
         self.botonO = Button(master_surface=self.slave_surface,x=300,y=200,w=50,h=50,color_back=colores.COLOR_AZUL, color_border=colores.COLOR_AMARILLO_MOSTAZA, on_click=self.set_nombre, on_click_param="O",text="O",font="arial",font_size=15,font_color=colores.COLOR_AMARILLO_MOSTAZA)
         self.botonP = Button(master_surface=self.slave_surface,x=350,y=200,w=50,h=50,color_back=colores.COLOR_AZUL, color_border=colores.COLOR_AMARILLO_MOSTAZA, on_click=self.set_nombre, on_click_param="P",text="P",font="arial",font_size=15,font_color=colores.COLOR_AMARILLO_MOSTAZA)
         self.botonQ = Button(master_surface=self.slave_surface,x=400,y=200,w=50,h=50,color_back=colores.COLOR_AZUL, color_border=colores.COLOR_AMARILLO_MOSTAZA, on_click=self.set_nombre, on_click_param="Q",text="Q",font="arial",font_size=15,font_color=colores.COLOR_AMARILLO_MOSTAZA)
-        self.botonR = Button(master_surface=self.slave_surface,x=400,y=200,w=50,h=50,color_back=colores.COLOR_AZUL, color_border=colores.COLOR_AMARILLO_MOSTAZA, on_click=self.set_nombre, on_click_param="R",text="R",font="arial",font_size=15,font_color=colores.COLOR_AMARILLO_MOSTAZA)
+        self.botonR = Button(master_surface=self.slave_surface,x=450,y=200,w=50,h=50,color_back=colores.COLOR_AZUL, color_border=colores.COLOR_AMARILLO_MOSTAZA, on_click=self.set_nombre, on_click_param="R",text="R",font="arial",font_size=15,font_color=colores.COLOR_AMARILLO_MOSTAZA)
 
         self.botonS = Button(master_surface=self.slave_surface,x=50,y=250,w=50,h=50,color_back=colores.COLOR_AZUL, color_border=colores.COLOR_AMARILLO_MOSTAZA, on_click=self.set_nombre, on_click_param="S",text="S",font="arial",font_size=15,font_color=colores.COLOR_AMARILLO_MOSTAZA)
         self.botonT = Button(master_surface=self.slave_surface,x=100,y=250,w=50,h=50,color_back=colores.COLOR_AZUL, color_border=colores.COLOR_AMARILLO_MOSTAZA, on_click=self.set_nombre, on_click_param="T",text="T",font="arial",font_size=15,font_color=colores.COLOR_AMARILLO_MOSTAZA)
@@ -50,8 +50,8 @@ class FormMenuC(Form):
 
         self.lista_widget = [self.boton1,self.boton2,
                              self.botonA,self.botonB,self.botonC,self.botonD,self.botonE,self.botonF,self.botonG,self.botonH,self.botonI,
-                             self.botonJ,self.botonK,self.botonL,self.botonM,self.botonN,self.botonO,self.botonP,self.botonQ,self.botonI,
-                             self.botonR,self.botonS,self.botonT,self.botonU,self.botonV,self.botonW,self.botonX,self.botonY,self.botonI,
+                             self.botonJ,self.botonK,self.botonL,self.botonM,self.botonN,self.botonO,self.botonP,self.botonQ,
+                             self.botonR,self.botonS,self.botonT,self.botonU,self.botonV,self.botonW,self.botonX,self.botonY,
                              self.botonZ,self.botonNombre,self.botonBorrar]
     def set_nombre(self,param):
         print(param)
